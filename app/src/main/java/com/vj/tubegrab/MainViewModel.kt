@@ -43,6 +43,20 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private var suggestJob: Job? = null
 
+    val updateState = Updater.state
+
+    init {
+        viewModelScope.launch { Updater.check(getApplication(), silent = true) }
+    }
+
+    fun checkForUpdate() {
+        viewModelScope.launch { Updater.check(getApplication(), silent = false) }
+    }
+
+    fun downloadUpdate(release: Updater.Release) {
+        viewModelScope.launch { Updater.download(getApplication(), release) }
+    }
+
     fun selectTab(t: Int) {
         tab = t
         clearSuggestions()

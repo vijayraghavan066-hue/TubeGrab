@@ -79,6 +79,7 @@ import com.vj.tubegrab.MainViewModel
 import com.vj.tubegrab.SOURCE_ARCHIVE
 import com.vj.tubegrab.SOURCE_YOUTUBE
 import com.vj.tubegrab.SearchPane
+import com.vj.tubegrab.Updater
 import com.vj.tubegrab.VideoItem
 import com.vj.tubegrab.formatDuration
 import com.vj.tubegrab.formatViews
@@ -123,6 +124,7 @@ fun MainScreen(vm: MainViewModel) {
                         }),
                     )
                     EngineBanner(engine, onRetry = vm::updateEngine)
+                    UpdateBanner(vm)
                     TabRow(selectedTabIndex = tab) {
                         Tab(
                             selected = tab == MainViewModel.TAB_YOUTUBE,
@@ -162,7 +164,70 @@ fun MainScreen(vm: MainViewModel) {
                     vm, vm.other, onPick,
                     emptyHint = "Searches Internet Archive (free public-domain movies, classic films, old TV, documentaries) and Dailymotion at the same time.\n\nType above and press search.",
                 )
-                else -> DownloadsTab(engine, onUpdateEngine = vm::updateEngine)
+                else -> DownloadsTab(engine, onUpdateEngine = vm::updateEngine, onCheckAppUpdate = vm::checkForUpdate)
+            }
+        }
+    }
+}
+
+/** Play-Store-style "Update available" strip shown at the top when a newer build exists. */
+@Composable
+private fun UpdateBanner(vm: MainViewModel) {
+    val context = LocalContext.current
+    val state by vm.updateState.collectAsStateWithLifecycle()
+    val s = state
+    if (s is Updater.State.Idle) return
+
+    Surface(
+        color = MaterialTheme.colorScheme.primaryContainer,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp),
+    ) {
+        Column(Modifier.padding(horizontal = 14.dp, vertical = 8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                val text = when (s) {
+                    is Updater.State.Checking -> "Checking for updates…"
+                    is Updater.State.UpToDate -> "You're on the latest version"
+                    is Updater.State.Available -> "Update available · build ${s.release.build}" +
+                        (if (s.release.sizeBytes > 0) " · ${s.release.sizeBytes / 1_048_576} MB" else "")
+                    is Updater.State.Downloading -> "Downloading update… ${s.percent}%"
+                    is Updater.State.ReadyToInstall -> "Update downloaded · tap Install"
+                    is Updater.State.Error -> s.message
+                    is Updater.State.Idle -> ""
+                }
+                Text(
+                    text,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f),
+                )
+                when (s) {
+                    is Updater.State.Available ->
+                        TextButton(onClick = { vm.downloadUpdate(s.release) }) { Text("Update") }
+                    is Updater.State.ReadyToInstall ->
+                        TextButton(onClick = { Updater.install(context, s.file) }) { Text("Install") }
+                    else -> {}
+                }
+                if (s !is Updater.State.Downloading && s !is Updater.State.Checking) {
+                    IconButton(onClick = { Updater.dismiss() }, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.Default.Close, contentDescription = "Dismiss", modifier = Modifier.size(16.dp))
+                    }
+                }
+            }
+            when (s) {
+                is Updater.State.Downloading -> LinearProgressIndicator(
+                    progress = { s.percent / 100f },
+                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                )
+                is Updater.State.Checking -> LinearProgressIndicator(Modifier.fillMaxWidth().padding(top = 4.dp))
+                is Updater.State.ReadyToInstall -> Text(
+                    "First time only: Android may ask you to allow TubeGrab to install apps. Turn it on, come back, and tap Install again.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                )
+                else -> {}
             }
         }
     }
@@ -405,7 +470,7 @@ private fun DownloadButton(onDownload: (DlFormat) -> Unit, label: String = "Down
 // ---------------------------------------------------------------- Downloads tab
 
 @Composable
-private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit) {
+private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onCheckAppUpdate: () -> Unit) {
     val context = LocalContext.current
     val list = DownloadCenter.items
 
@@ -466,13 +531,16 @@ private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit) {
         ) {
             val v = (engine as? EngineStatus.Ready)?.version
             Text(
-                "Engine: yt-dlp ${v ?: "…"}",
+                "App ${Updater.currentVersionName(context)}\nEngine: yt-dlp ${v ?: "…"}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.weight(1f),
             )
-            TextButton(onClick = onUpdateEngine, enabled = engine is EngineStatus.Ready || engine is EngineStatus.Error) {
-                Text("Update engine")
+            Column(horizontalAlignment = Alignment.End) {
+                TextButton(onClick = onCheckAppUpdate) { Text("Check app update") }
+                TextButton(onClick = onUpdateEngine, enabled = engine is EngineStatus.Ready || engine is EngineStatus.Error) {
+                    Text("Update engine")
+                }
             }
         }
     }

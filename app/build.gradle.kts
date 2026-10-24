@@ -12,8 +12,10 @@ android {
         applicationId = "com.vj.tubegrab"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1"
+        // CI passes -PbuildNumber=<GitHub run number>; the in-app updater compares against it
+        val buildNumber = (project.findProperty("buildNumber") as String?)?.toIntOrNull() ?: 1
+        versionCode = buildNumber
+        versionName = "1.2 (build $buildNumber)"
     }
 
     // yt-dlp ships a Python runtime per CPU type, so build one smaller APK per CPU type
