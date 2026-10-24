@@ -76,13 +76,16 @@ import com.vj.tubegrab.DlStatus
 import com.vj.tubegrab.DownloadCenter
 import com.vj.tubegrab.EngineStatus
 import com.vj.tubegrab.MainViewModel
+import com.vj.tubegrab.SOURCE_ARCHIVE
+import com.vj.tubegrab.SOURCE_YOUTUBE
+import com.vj.tubegrab.SearchPane
 import com.vj.tubegrab.VideoItem
 import com.vj.tubegrab.formatDuration
 import com.vj.tubegrab.formatViews
 
 @Composable
 fun MainScreen(vm: MainViewModel) {
-    var tab by rememberSaveable { mutableIntStateOf(0) }
+    val tab = vm.tab
     val engine by vm.engineStatus.collectAsStateWithLifecycle()
     val focus = LocalFocusManager.current
     val active = DownloadCenter.items.count { it.status == DlStatus.Running || it.status == DlStatus.Queued }
@@ -97,7 +100,12 @@ fun MainScreen(vm: MainViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 8.dp),
-                        placeholder = { Text("Search YouTube or paste a link") },
+                        placeholder = {
+                            Text(
+                                if (tab == MainViewModel.TAB_OTHER) "Search Internet Archive + Dailymotion"
+                                else "Search YouTube or paste a link"
+                            )
+                        },
                         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                         trailingIcon = {
                             if (vm.query.isNotEmpty()) {
@@ -111,17 +119,25 @@ fun MainScreen(vm: MainViewModel) {
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                         keyboardActions = KeyboardActions(onSearch = {
                             focus.clearFocus()
-                            tab = 0
                             vm.search()
                         }),
                     )
                     EngineBanner(engine, onRetry = vm::updateEngine)
                     TabRow(selectedTabIndex = tab) {
-                        Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text("Search") })
                         Tab(
-                            selected = tab == 1,
-                            onClick = { tab = 1; vm.clearSuggestions() },
-                            text = { Text(if (active > 0) "Downloads ($active)" else "Downloads") },
+                            selected = tab == MainViewModel.TAB_YOUTUBE,
+                            onClick = { vm.selectTab(MainViewModel.TAB_YOUTUBE) },
+                            text = { Text("YouTube") },
+                        )
+                        Tab(
+                            selected = tab == MainViewModel.TAB_OTHER,
+                            onClick = { focus.clearFocus(); vm.selectTab(MainViewModel.TAB_OTHER) },
+                            text = { Text("Other sites", maxLines = 1) },
+                        )
+                        Tab(
+                            selected = tab == MainViewModel.TAB_DOWNLOADS,
+                            onClick = { vm.selectTab(MainViewModel.TAB_DOWNLOADS) },
+                            text = { Text(if (active > 0) "Downloads ($active)" else "Downloads", maxLines = 1) },
                         )
                     }
                 }
@@ -133,13 +149,20 @@ fun MainScreen(vm: MainViewModel) {
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            if (tab == 0) {
-                SearchTab(vm, onPick = { s ->
-                    focus.clearFocus()
-                    vm.search(s)
-                })
-            } else {
-                DownloadsTab(engine, onUpdateEngine = vm::updateEngine)
+            val onPick: (String) -> Unit = { s ->
+                focus.clearFocus()
+                vm.search(s)
+            }
+            when (tab) {
+                MainViewModel.TAB_YOUTUBE -> SearchTab(
+                    vm, vm.youtube, onPick,
+                    emptyHint = "Search for any video or song.\n\nTip: in the YouTube app tap Share → TubeGrab to download that video directly.",
+                )
+                MainViewModel.TAB_OTHER -> SearchTab(
+                    vm, vm.other, onPick,
+                    emptyHint = "Searches Internet Archive (free public-domain movies, classic films, old TV, documentaries) and Dailymotion at the same time.\n\nType above and press search.",
+                )
+                else -> DownloadsTab(engine, onUpdateEngine = vm::updateEngine)
             }
         }
     }
@@ -173,11 +196,16 @@ private fun EngineBanner(status: EngineStatus, onRetry: () -> Unit) {
 // ---------------------------------------------------------------- Search tab
 
 @Composable
-private fun SearchTab(vm: MainViewModel, onPick: (String) -> Unit) {
+private fun SearchTab(
+    vm: MainViewModel,
+    pane: SearchPane,
+    onPick: (String) -> Unit,
+    emptyHint: String,
+) {
     val context = LocalContext.current
 
     // Live suggestions while typing (like YouTube's own search box)
-    if (vm.suggestions.isNotEmpty()) {
+    if (pane === vm.youtube && vm.suggestions.isNotEmpty()) {
         LazyColumn(Modifier.fillMaxSize()) {
             items(vm.suggestions) { s ->
                 Row(
@@ -201,20 +229,18 @@ private fun SearchTab(vm: MainViewModel, onPick: (String) -> Unit) {
     }
 
     Column(Modifier.fillMaxSize()) {
-        if (vm.searching) {
+        if (pane.searching) {
             LinearProgressIndicator(Modifier.fillMaxWidth())
         }
         when {
-            !vm.hasSearched -> CenterHint(
-                "Search for any video or song.\n\nTip: in the YouTube app tap Share → TubeGrab to download that video directly."
-            )
-            vm.searching && vm.results.isEmpty() -> CenterHint("Searching…")
-            vm.error != null && vm.results.isEmpty() -> CenterHint(vm.error ?: "", isError = true)
+            !pane.hasSearched -> CenterHint(emptyHint)
+            pane.searching && pane.results.isEmpty() -> CenterHint("Searching…")
+            pane.error != null && pane.results.isEmpty() -> CenterHint(pane.error ?: "", isError = true)
             else -> LazyColumn(
                 Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = 24.dp),
             ) {
-                itemsIndexed(vm.results) { _, item ->
+                itemsIndexed(pane.results) { _, item ->
                     ResultRow(
                         item = item,
                         state = DownloadCenter.latestFor(item.id),
@@ -245,7 +271,10 @@ private fun ResultRow(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
-            val meta = listOf(item.channel, formatViews(item.views)).filter { it.isNotBlank() }.joinToString(" • ")
+            val countText = if (item.source == SOURCE_ARCHIVE)
+                formatViews(item.views).replace("views", "downloads") else formatViews(item.views)
+            val sourceTag = if (item.source != SOURCE_YOUTUBE) item.source else ""
+            val meta = listOf(sourceTag, item.channel, countText).filter { it.isNotBlank() }.joinToString(" • ")
             if (meta.isNotEmpty()) {
                 Text(
                     meta,

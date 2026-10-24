@@ -11,7 +11,12 @@ data class VideoItem(
     val views: Long,         // -1 when unknown
     val url: String,
     val thumbnail: String,
+    val source: String = SOURCE_YOUTUBE,
 )
+
+const val SOURCE_YOUTUBE = "YouTube"
+const val SOURCE_ARCHIVE = "Internet Archive"
+const val SOURCE_DAILYMOTION = "Dailymotion"
 
 sealed class DlFormat(val label: String, val isAudio: Boolean) {
     data object Mp3 : DlFormat("MP3 audio", true)

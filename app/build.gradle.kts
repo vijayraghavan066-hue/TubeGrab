@@ -12,8 +12,8 @@ android {
         applicationId = "com.vj.tubegrab"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
 
     // yt-dlp ships a Python runtime per CPU type, so build one smaller APK per CPU type
@@ -27,11 +27,21 @@ android {
         }
     }
 
+    // Fixed personal signing key so each new build installs as an update over the old one.
+    // (Fine for a personal sideloaded app; never reuse this key for a Play Store app.)
+    signingConfigs {
+        create("tubegrab") {
+            storeFile = file("tubegrab-release.jks")
+            storePassword = "tubegrab123"
+            keyAlias = "tubegrab"
+            keyPassword = "tubegrab123"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
-            // Signed with the debug key so the release APK installs without extra setup
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("tubegrab")
         }
     }
 

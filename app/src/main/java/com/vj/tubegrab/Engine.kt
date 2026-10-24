@@ -8,6 +8,8 @@ import com.yausername.youtubedl_android.YoutubeDLRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -171,6 +173,116 @@ object Engine {
         }
     }
 
+    // ------------------------------------------------------------ Other sites
+
+    private fun httpGet(url: String): String {
+        val conn = URL(url).openConnection() as HttpURLConnection
+        conn.connectTimeout = 8000
+        conn.readTimeout = 12000
+        conn.setRequestProperty("User-Agent", "TubeGrab/1.1 (Android)")
+        try {
+            if (conn.responseCode !in 200..299) error("HTTP ${conn.responseCode}")
+            return conn.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
+        } finally {
+            conn.disconnect()
+        }
+    }
+
+    /** Some Archive fields come back as either a string or an array of strings. */
+    private fun JSONObject.strOrFirst(key: String): String {
+        if (!has(key) || isNull(key)) return ""
+        val v = opt(key)
+        return if (v is JSONArray) (if (v.length() > 0) v.optString(0) else "") else v.toString()
+    }
+
+    /** "1:23:45", "23:45" or "85 minutes" -> seconds; -1 if unknown. */
+    private fun parseRuntime(raw: String): Long {
+        val t = raw.trim()
+        if (t.isEmpty()) return -1
+        if (t.contains(":")) {
+            val parts = t.split(":").mapNotNull { it.trim().toDoubleOrNull() }
+            if (parts.isEmpty()) return -1
+            return parts.fold(0.0) { acc, p -> acc * 60 + p }.toLong()
+        }
+        val n = Regex("(\\d+(?:\\.\\d+)?)").find(t)?.value?.toDoubleOrNull() ?: return -1
+        return when {
+            t.contains("min", ignoreCase = true) -> (n * 60).toLong()
+            t.contains("h", ignoreCase = true) -> (n * 3600).toLong()
+            else -> n.toLong()
+        }
+    }
+
+    private fun searchArchive(query: String, rows: Int = 20): List<VideoItem> {
+        val q = URLEncoder.encode("($query) AND mediatype:(movies)", "UTF-8")
+        val fields = listOf("identifier", "title", "creator", "downloads", "runtime")
+            .joinToString("") { "&fl%5B%5D=$it" }
+        val body = httpGet("https://archive.org/advancedsearch.php?q=$q$fields&rows=$rows&page=1&output=json")
+        val docs = JSONObject(body).getJSONObject("response").getJSONArray("docs")
+        return (0 until docs.length()).mapNotNull { i ->
+            val d = docs.optJSONObject(i) ?: return@mapNotNull null
+            val id = d.strOrFirst("identifier").ifBlank { return@mapNotNull null }
+            VideoItem(
+                id = "ia_$id",
+                title = d.strOrFirst("title").ifBlank { id },
+                channel = d.strOrFirst("creator"),
+                durationSec = parseRuntime(d.strOrFirst("runtime")),
+                views = d.optLong("downloads", -1),
+                url = "https://archive.org/details/$id",
+                thumbnail = "https://archive.org/services/img/$id",
+                source = SOURCE_ARCHIVE,
+            )
+        }
+    }
+
+    private fun searchDailymotion(query: String, limit: Int = 20): List<VideoItem> {
+        val q = URLEncoder.encode(query, "UTF-8")
+        val body = httpGet(
+            "https://api.dailymotion.com/videos?search=$q&limit=$limit" +
+                "&fields=id,title,owner.screenname,duration,views_total,thumbnail_360_url,url"
+        )
+        val list = JSONObject(body).getJSONArray("list")
+        return (0 until list.length()).mapNotNull { i ->
+            val v = list.optJSONObject(i) ?: return@mapNotNull null
+            val id = v.str("id").ifBlank { return@mapNotNull null }
+            VideoItem(
+                id = "dm_$id",
+                title = v.str("title").ifBlank { "(untitled)" },
+                channel = v.str("owner.screenname"),
+                durationSec = v.num("duration").toLong(),
+                views = v.num("views_total").toLong(),
+                url = v.str("url").ifBlank { "https://www.dailymotion.com/video/$id" },
+                thumbnail = v.str("thumbnail_360_url"),
+                source = SOURCE_DAILYMOTION,
+            )
+        }
+    }
+
+    /**
+     * Searches Internet Archive + Dailymotion at the same time and mixes the results.
+     * If one site fails the other's results still show; only throws if both fail.
+     */
+    suspend fun searchOtherSites(query: String): List<VideoItem> = coroutineScope {
+        val q = query.trim()
+        val ia = async(Dispatchers.IO) { runCatching { searchArchive(q) } }
+        val dm = async(Dispatchers.IO) { runCatching { searchDailymotion(q) } }
+        val a = ia.await()
+        val d = dm.await()
+        if (a.isFailure && d.isFailure) {
+            throw a.exceptionOrNull() ?: d.exceptionOrNull() ?: IllegalStateException("Search failed")
+        }
+        val la = a.getOrDefault(emptyList())
+        val ld = d.getOrDefault(emptyList())
+        // interleave so both sources show near the top
+        buildList {
+            for (i in 0 until maxOf(la.size, ld.size)) {
+                la.getOrNull(i)?.let { add(it) }
+                ld.getOrNull(i)?.let { add(it) }
+            }
+        }
+    }
+
+    // ------------------------------------------------------------ Downloads
+
     private fun workDir(context: Context, key: String) = File(context.cacheDir, "dl/$key")
 
     /**
@@ -189,6 +301,8 @@ object Engine {
 
         val req = YoutubeDLRequest(item.url).apply {
             addOption("--no-playlist")
+            // An Archive item can hold several files (parts, trailers); take the first one
+            if (item.source != SOURCE_YOUTUBE) addOption("--playlist-items", "1")
             addOption("--no-mtime")
             addOption("--no-warnings")
             addOption("-o", "${dir.absolutePath}/%(title).120B.%(ext)s")
