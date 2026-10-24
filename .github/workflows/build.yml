@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -26,3 +28,13 @@ jobs:
         with:
           name: TubeGrab-APKs
           path: app/build/outputs/apk/release/*.apk
+
+      # Publish the APKs as a GitHub Release so they can be downloaded directly on a phone
+      - name: Publish release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: TubeGrab build ${{ github.run_number }}
+          make_latest: true
+          files: app/build/outputs/apk/release/*.apk
