@@ -23,7 +23,8 @@ import java.net.URL
  * and hands it to Android's installer (one tap to confirm).
  */
 object Updater {
-    private const val REPO = "vijayraghavan066-hue/TubeGrab"
+    // Public APK-only repo (the source code repo is private)
+    private const val REPO = "vijayraghavan066-hue/TubeGrab-releases"
 
     data class Release(val build: Long, val title: String, val apkUrl: String, val sizeBytes: Long)
 

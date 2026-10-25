@@ -25,7 +25,7 @@ Built with Kotlin + Jetpack Compose on top of [yt-dlp](https://github.com/yt-dlp
 
 ## How updates are built
 Every push to `main` runs the GitHub Action, which builds the APKs and publishes a release tagged `build-N`. N is the GitHub run number, and it's also the app's versionCode. The in-app updater compares the two numbers and downloads the APK that matches the phone's CPU.
-Keep this repo **public** so the updater can see releases. If you make it private, the updater needs a separate public APK repo.
+This code repo is **private**. Builds are published to the public APK-only repo [`TubeGrab-releases`](https://github.com/vijayraghavan066-hue/TubeGrab-releases), which is what the in-app updater reads. Signing uses the `KEYSTORE_BASE64` / `KEYSTORE_PASSWORD` secrets, and publishing uses `RELEASES_TOKEN`. The keystore is never committed.
 
 ## Get the APK, option A: GitHub (no PC setup needed)
 1. Create a free account at github.com, then click **New repository** and name it `TubeGrab` (Private is fine).

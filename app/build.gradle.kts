@@ -29,21 +29,25 @@ android {
         }
     }
 
-    // Fixed personal signing key so each new build installs as an update over the old one.
-    // (Fine for a personal sideloaded app; never reuse this key for a Play Store app.)
+    // Signing key comes from CI secrets (never committed). CI decodes the keystore to
+    // app/release.jks and passes the passwords as env vars. Keep the same key forever so
+    // each new build installs as an update over the old one.
+    val ksFile = file(System.getenv("TG_KEYSTORE_PATH") ?: "release.jks")
+    val hasKey = ksFile.exists() && System.getenv("TG_KEYSTORE_PASSWORD") != null
     signingConfigs {
-        create("tubegrab") {
-            storeFile = file("tubegrab-release.jks")
-            storePassword = "tubegrab123"
-            keyAlias = "tubegrab"
-            keyPassword = "tubegrab123"
+        if (hasKey) create("tubegrab") {
+            storeFile = ksFile
+            storePassword = System.getenv("TG_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("TG_KEY_ALIAS") ?: "tubegrab"
+            keyPassword = System.getenv("TG_KEY_PASSWORD") ?: System.getenv("TG_KEYSTORE_PASSWORD")
         }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("tubegrab")
+            // Without the secret key (e.g. a local build) fall back to the debug key
+            signingConfig = if (hasKey) signingConfigs.getByName("tubegrab") else signingConfigs.getByName("debug")
         }
     }
 
