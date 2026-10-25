@@ -1,7 +1,9 @@
 package com.vj.tubegrab
 
 import android.content.ContentValues
+import android.app.RecoverableSecurityException
 import android.content.Context
+import android.content.IntentSender
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
@@ -26,8 +28,19 @@ object Saver {
         else -> if (audio) "audio/mpeg" else "video/mp4"
     }
 
-    suspend fun publish(context: Context, file: File, audio: Boolean): Uri? = withContext(Dispatchers.IO) {
+    /** Folder-safe version of a video title, e.g. for an album folder. */
+    fun safeFolderName(name: String): String =
+        name.replace(Regex("[\\\\/:*?\"<>|]"), "_").replace(Regex("\\s+"), " ").trim().trimEnd('.').take(80)
+            .ifBlank { "Album" }
+
+    /**
+     * Copies [file] into Music/TubeGrab (audio) or Movies/TubeGrab (video),
+     * optionally inside [subFolder] (used for split albums).
+     */
+    suspend fun publish(context: Context, file: File, audio: Boolean, subFolder: String? = null): Uri? =
+        withContext(Dispatchers.IO) {
         val mime = mimeOf(file, audio)
+        val tail = if (subFolder.isNullOrBlank()) "TubeGrab" else "TubeGrab/$subFolder"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val resolver = context.contentResolver
             val collection = if (audio)
@@ -40,7 +53,7 @@ object Saver {
                 put(MediaStore.MediaColumns.MIME_TYPE, mime)
                 put(
                     MediaStore.MediaColumns.RELATIVE_PATH,
-                    (if (audio) Environment.DIRECTORY_MUSIC else Environment.DIRECTORY_MOVIES) + "/TubeGrab"
+                    (if (audio) Environment.DIRECTORY_MUSIC else Environment.DIRECTORY_MOVIES) + "/" + tail
                 )
                 put(MediaStore.MediaColumns.IS_PENDING, 1)
             }
@@ -62,7 +75,7 @@ object Saver {
             val base = Environment.getExternalStoragePublicDirectory(
                 if (audio) Environment.DIRECTORY_MUSIC else Environment.DIRECTORY_MOVIES
             )
-            val dir = File(base, "TubeGrab").apply { mkdirs() }
+            val dir = File(base, tail).apply { mkdirs() }
             var dest = File(dir, file.name)
             var n = 1
             while (dest.exists()) {
@@ -74,6 +87,31 @@ object Saver {
                     if (cont.isActive) cont.resume(uri)
                 }
             }
+        }
+    }
+
+    sealed class DeleteResult {
+        data object Deleted : DeleteResult()
+        /** Android wants the user to confirm (e.g. files saved before an app reinstall). */
+        data class NeedsConfirm(val sender: IntentSender) : DeleteResult()
+        data class Failed(val message: String) : DeleteResult()
+    }
+
+    fun delete(context: Context, uri: Uri): DeleteResult {
+        val resolver = context.contentResolver
+        return try {
+            resolver.delete(uri, null, null)
+            DeleteResult.Deleted
+        } catch (e: SecurityException) {
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
+                    DeleteResult.NeedsConfirm(MediaStore.createDeleteRequest(resolver, listOf(uri)).intentSender)
+                Build.VERSION.SDK_INT == Build.VERSION_CODES.Q && e is RecoverableSecurityException ->
+                    DeleteResult.NeedsConfirm(e.userAction.actionIntent.intentSender)
+                else -> DeleteResult.Failed(e.message ?: "Not allowed")
+            }
+        } catch (e: Exception) {
+            DeleteResult.Failed(e.message ?: "Delete failed")
         }
     }
 }

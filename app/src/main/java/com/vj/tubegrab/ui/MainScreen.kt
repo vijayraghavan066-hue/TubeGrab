@@ -1,6 +1,12 @@
 package com.vj.tubegrab.ui
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.PlayArrow
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -79,6 +85,8 @@ import com.vj.tubegrab.MainViewModel
 import com.vj.tubegrab.SOURCE_ARCHIVE
 import com.vj.tubegrab.SOURCE_YOUTUBE
 import com.vj.tubegrab.SearchPane
+import com.vj.tubegrab.SavedTrack
+import com.vj.tubegrab.Saver
 import com.vj.tubegrab.Updater
 import com.vj.tubegrab.VideoItem
 import com.vj.tubegrab.formatDuration
@@ -493,14 +501,18 @@ private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onChe
                             Text(s.item.title, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
                             when (s.status) {
                                 DlStatus.Queued, DlStatus.Running -> ProgressBlock(s)
-                                DlStatus.Done -> Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text(
-                                        "${s.format.label} · ${s.message}",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                    TextButton(onClick = { openSaved(context, s.savedUri) }) { Text("Play") }
+                                DlStatus.Done -> if (s.tracks.isNotEmpty() || s.format == DlFormat.Mp3Split && s.message.startsWith("All songs")) {
+                                    SplitTracks(s)
+                                } else {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Text(
+                                            "${s.format.label} · ${s.message}",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            modifier = Modifier.weight(1f),
+                                        )
+                                        TextButton(onClick = { openSaved(context, s.savedUri) }) { Text("Play") }
+                                    }
                                 }
                                 DlStatus.Failed, DlStatus.Canceled -> Row(verticalAlignment = Alignment.CenterVertically) {
                                     Text(
@@ -540,6 +552,78 @@ private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onChe
                 TextButton(onClick = onCheckAppUpdate) { Text("Check app update") }
                 TextButton(onClick = onUpdateEngine, enabled = engine is EngineStatus.Ready || engine is EngineStatus.Error) {
                     Text("Update engine")
+                }
+            }
+        }
+    }
+}
+
+/** Song list for a split album: play or delete each song. */
+@Composable
+private fun SplitTracks(s: DlState) {
+    val context = LocalContext.current
+    var expanded by rememberSaveable(s.key) { mutableStateOf(true) }
+    var pending by remember { mutableStateOf<Uri?>(null) }
+
+    // Android sometimes asks the user to confirm a delete (e.g. after reinstalling the app)
+    val confirmDelete = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        val uri = pending
+        if (result.resultCode == Activity.RESULT_OK && uri != null) DownloadCenter.removeTrack(s.key, uri)
+        pending = null
+    }
+
+    fun delete(t: SavedTrack) {
+        when (val r = Saver.delete(context, t.uri)) {
+            is Saver.DeleteResult.Deleted -> DownloadCenter.removeTrack(s.key, t.uri)
+            is Saver.DeleteResult.NeedsConfirm -> {
+                pending = t.uri
+                confirmDelete.launch(IntentSenderRequest.Builder(r.sender).build())
+            }
+            is Saver.DeleteResult.Failed ->
+                Toast.makeText(context, "Couldn't delete: ${r.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                s.message,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f),
+            )
+            if (s.tracks.isNotEmpty()) {
+                TextButton(onClick = { expanded = !expanded }) { Text(if (expanded) "Hide songs" else "Show songs") }
+            }
+        }
+        if (expanded) {
+            s.tracks.forEach { t ->
+                Row(
+                    Modifier.fillMaxWidth().clickable { openSaved(context, t.uri) },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        Icons.Default.PlayArrow, contentDescription = "Play",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        t.title,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    IconButton(onClick = { delete(t) }, modifier = Modifier.size(40.dp)) {
+                        Icon(
+                            Icons.Default.Delete, contentDescription = "Delete song",
+                            tint = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(20.dp),
+                        )
+                    }
                 }
             }
         }

@@ -295,9 +295,10 @@ object Engine {
         format: DlFormat,
         key: String,
         onProgress: (Float, String) -> Unit,
-    ): File = withContext(Dispatchers.IO) {
+    ): DownloadResult = withContext(Dispatchers.IO) {
         awaitIdle(context)
         val dir = workDir(context, key).apply { deleteRecursively(); mkdirs() }
+        val partsDir = File(dir, "parts")
 
         val req = YoutubeDLRequest(item.url).apply {
             addOption("--no-playlist")
@@ -307,6 +308,20 @@ object Engine {
             addOption("--no-warnings")
             addOption("-o", "${dir.absolutePath}/%(title).120B.%(ext)s")
             when (format) {
+                DlFormat.Mp3Split -> {
+                    addOption("-f", "ba/b")
+                    addOption("-x")
+                    addOption("--audio-format", "mp3")
+                    addOption("--audio-quality", "0")
+                    addOption("--embed-metadata")
+                    // Cut at the video's chapters (YouTube chapters or 0:00-style timestamps
+                    // in the description) and save each part as its own MP3
+                    addOption("--split-chapters")
+                    addOption(
+                        "--output",
+                        "chapter:${partsDir.absolutePath}/%(section_number)02d - %(section_title).100B.%(ext)s"
+                    )
+                }
                 DlFormat.Mp3 -> {
                     addOption("-f", "ba/b")
                     addOption("-x")
@@ -334,10 +349,22 @@ object Engine {
             onProgress(progress, line)
         }
 
-        dir.listFiles()
-            ?.filter { it.isFile && !it.name.endsWith(".part") && !it.name.endsWith(".ytdl") }
+        fun usable(f: File) = f.isFile && !f.name.endsWith(".part") && !f.name.endsWith(".ytdl") &&
+            !f.name.endsWith(".temp") && f.length() > 0
+
+        val parts = partsDir.listFiles()
+            ?.filter { usable(it) && it.extension.equals("mp3", ignoreCase = true) }
+            ?.sortedBy { it.name }
+            .orEmpty()
+        if (format == DlFormat.Mp3Split && parts.size > 1) {
+            return@withContext DownloadResult(parts, split = true)
+        }
+
+        val single = dir.listFiles()
+            ?.filter { usable(it) }
             ?.maxByOrNull { it.length() }
             ?: error("Download finished but no file was produced")
+        DownloadResult(listOf(single), split = false)
     }
 
     fun cancel(key: String) {

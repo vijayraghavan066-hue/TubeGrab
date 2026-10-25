@@ -20,14 +20,21 @@ const val SOURCE_DAILYMOTION = "Dailymotion"
 
 sealed class DlFormat(val label: String, val isAudio: Boolean) {
     data object Mp3 : DlFormat("MP3 audio", true)
+    data object Mp3Split : DlFormat("MP3 – split into songs (albums / jukebox)", true)
     data object M4a : DlFormat("M4A audio (no re-encode, faster)", true)
     data class Video(val height: Int) : DlFormat("Video ${height}p (MP4)", false)
 
     companion object {
         // getter (not a stored field) avoids a class-initialization-order trap with the nested objects
-        val all: List<DlFormat> get() = listOf(Mp3, M4a, Video(360), Video(720), Video(1080))
+        val all: List<DlFormat> get() = listOf(Mp3, Mp3Split, M4a, Video(360), Video(720), Video(1080))
     }
 }
+
+/** What a finished download produced: one file, or one file per song when split. */
+data class DownloadResult(val files: List<java.io.File>, val split: Boolean)
+
+/** One saved song from a split download. */
+data class SavedTrack(val title: String, val uri: Uri)
 
 enum class DlStatus { Queued, Running, Done, Failed, Canceled }
 
@@ -39,6 +46,8 @@ data class DlState(
     val progress: Float = -1f,   // 0..100, -1 = unknown
     val message: String = "Starting…",
     val savedUri: Uri? = null,
+    val tracks: List<SavedTrack> = emptyList(),   // filled for split downloads
+    val folder: String = "",                     // e.g. "Music/TubeGrab/Album name"
 )
 
 sealed class EngineStatus {

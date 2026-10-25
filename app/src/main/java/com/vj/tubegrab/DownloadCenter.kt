@@ -37,7 +37,7 @@ object DownloadCenter {
                     if (key in canceled) throw CancellationException()
                     update(key) { it.copy(status = DlStatus.Running, message = "Getting video info…") }
 
-                    val file = Engine.download(app, item, format, key) { p, line ->
+                    val result = Engine.download(app, item, format, key) { p, line ->
                         scope.launch {
                             update(key) { s ->
                                 if (s.status == DlStatus.Running) s.copy(progress = p, message = describe(p, line, s.message))
@@ -47,15 +47,40 @@ object DownloadCenter {
                     }
                     if (key in canceled) throw CancellationException()
 
-                    update(key) { it.copy(progress = -1f, message = "Saving…") }
-                    val uri = Saver.publish(app, file, format.isAudio)
-                    update(key) {
-                        it.copy(
-                            status = DlStatus.Done,
-                            progress = 100f,
-                            savedUri = uri,
-                            message = "Saved to ${if (format.isAudio) "Music" else "Movies"}/TubeGrab",
-                        )
+                    if (result.split) {
+                        // One MP3 per song, grouped in a folder named after the video
+                        val album = Saver.safeFolderName(item.title)
+                        val tracks = ArrayList<SavedTrack>()
+                        result.files.forEachIndexed { i, f ->
+                            update(key) { it.copy(progress = -1f, message = "Saving song ${i + 1} of ${result.files.size}…") }
+                            val uri = Saver.publish(app, f, audio = true, subFolder = album)
+                            if (uri != null) tracks += SavedTrack(f.nameWithoutExtension, uri)
+                        }
+                        update(key) {
+                            it.copy(
+                                status = DlStatus.Done,
+                                progress = 100f,
+                                savedUri = tracks.firstOrNull()?.uri,
+                                tracks = tracks,
+                                folder = "Music/TubeGrab/$album",
+                                message = "${tracks.size} songs saved to Music/TubeGrab/$album",
+                            )
+                        }
+                    } else {
+                        update(key) { it.copy(progress = -1f, message = "Saving…") }
+                        val uri = Saver.publish(app, result.files.first(), format.isAudio)
+                        val where = "${if (format.isAudio) "Music" else "Movies"}/TubeGrab"
+                        update(key) {
+                            it.copy(
+                                status = DlStatus.Done,
+                                progress = 100f,
+                                savedUri = uri,
+                                folder = where,
+                                message = if (format == DlFormat.Mp3Split)
+                                    "No song chapters found in this video, so it was saved as one MP3 in $where"
+                                else "Saved to $where",
+                            )
+                        }
                     }
                 }
             } catch (e: Throwable) {
@@ -86,6 +111,17 @@ object DownloadCenter {
         items.removeAll { it.status != DlStatus.Running && it.status != DlStatus.Queued }
     }
 
+    /** Remove one song from a split download after it was deleted from the phone. */
+    fun removeTrack(key: String, uri: android.net.Uri) {
+        update(key) { s ->
+            val left = s.tracks.filterNot { it.uri == uri }
+            s.copy(
+                tracks = left,
+                message = if (left.isEmpty()) "All songs deleted" else "${left.size} songs in ${s.folder}",
+            )
+        }
+    }
+
     private fun update(key: String, change: (DlState) -> DlState) {
         val i = items.indexOfFirst { it.key == key }
         if (i >= 0) items[i] = change(items[i])
@@ -93,6 +129,7 @@ object DownloadCenter {
 
     /** Turn a raw yt-dlp output line into a short status text. */
     private fun describe(p: Float, line: String, previous: String): String = when {
+        line.contains("[SplitChapters]") -> "Splitting into songs…"
         line.contains("[ExtractAudio]") -> "Converting to MP3…"
         line.contains("[Merger]") -> "Merging video + audio…"
         line.contains("[Metadata]") -> "Adding tags…"
