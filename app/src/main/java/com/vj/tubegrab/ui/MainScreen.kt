@@ -52,6 +52,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -85,6 +86,8 @@ import com.vj.tubegrab.MainViewModel
 import com.vj.tubegrab.SOURCE_ARCHIVE
 import com.vj.tubegrab.SOURCE_YOUTUBE
 import com.vj.tubegrab.SearchPane
+import com.vj.tubegrab.AppSettings
+import com.vj.tubegrab.NetworkMonitor
 import com.vj.tubegrab.SavedTrack
 import com.vj.tubegrab.Saver
 import com.vj.tubegrab.Updater
@@ -133,6 +136,7 @@ fun MainScreen(vm: MainViewModel) {
                     )
                     EngineBanner(engine, onRetry = vm::updateEngine)
                     UpdateBanner(vm)
+                    WifiBanner()
                     TabRow(selectedTabIndex = tab) {
                         Tab(
                             selected = tab == MainViewModel.TAB_YOUTUBE,
@@ -176,6 +180,26 @@ fun MainScreen(vm: MainViewModel) {
             }
         }
     }
+}
+
+/** Shown when Wi-Fi only is on and the phone is on mobile data. */
+@Composable
+private fun WifiBanner() {
+    val wifiOnly by AppSettings.wifiOnly.collectAsStateWithLifecycle()
+    val onWifi by NetworkMonitor.onWifi.collectAsStateWithLifecycle()
+    if (!wifiOnly || onWifi) return
+    val waiting = DownloadCenter.items.count { it.status == DlStatus.Queued }
+    Text(
+        if (waiting > 0) "📶 On mobile data: $waiting download(s) will start when you're on Wi-Fi"
+        else "📶 On mobile data: downloads will wait for Wi-Fi (searching still works)",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSecondaryContainer,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .background(MaterialTheme.colorScheme.secondaryContainer, RoundedCornerShape(10.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+    )
 }
 
 /** Play-Store-style "Update available" strip shown at the top when a newer build exists. */
@@ -533,6 +557,27 @@ private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onChe
                     }
                 }
             }
+        }
+
+        // Wi-Fi only switch
+        HorizontalDivider()
+        val wifiOnly by AppSettings.wifiOnly.collectAsStateWithLifecycle()
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clickable { AppSettings.setWifiOnly(!wifiOnly) }
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text("Download only on Wi-Fi", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    if (wifiOnly) "Downloads and updates wait for Wi-Fi" else "Mobile data allowed",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Switch(checked = wifiOnly, onCheckedChange = { AppSettings.setWifiOnly(it) })
         }
 
         // Engine info + manual update (use this if YouTube downloads start failing)

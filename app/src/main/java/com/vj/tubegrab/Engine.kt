@@ -40,7 +40,8 @@ object Engine {
         scope.launch {
             try {
                 ensureReady(app)
-                update(app)
+                // Wi-Fi only: skip the automatic engine update on mobile data
+                if (NetworkMonitor.downloadsAllowed()) update(app)
             } catch (e: Exception) {
                 Log.e(TAG, "warm-up failed", e)
             }
@@ -67,6 +68,10 @@ object Engine {
     suspend fun update(context: Context) = withContext(Dispatchers.IO) {
         ensureReady(context)
         val app = context.applicationContext
+        if (!NetworkMonitor.downloadsAllowed()) {
+            _status.value = EngineStatus.Error("Wi-Fi only is on: connect to Wi-Fi to update the engine")
+            return@withContext
+        }
         _status.value = EngineStatus.Updating
         try {
             YoutubeDL.getInstance().updateYoutubeDL(app, YoutubeDL.UpdateChannel.STABLE)
@@ -297,7 +302,8 @@ object Engine {
         onProgress: (Float, String) -> Unit,
     ): DownloadResult = withContext(Dispatchers.IO) {
         awaitIdle(context)
-        val dir = workDir(context, key).apply { deleteRecursively(); mkdirs() }
+        // Not wiped first: after a Wi-Fi pause, yt-dlp continues from the partial file
+        val dir = workDir(context, key).apply { mkdirs() }
         val partsDir = File(dir, "parts")
 
         val req = YoutubeDLRequest(item.url).apply {

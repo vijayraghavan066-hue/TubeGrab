@@ -93,6 +93,10 @@ object Updater {
     }
 
     suspend fun download(context: Context, release: Release) = withContext(Dispatchers.IO) {
+        if (!NetworkMonitor.downloadsAllowed()) {
+            _state.value = State.Error("Wi-Fi only is on: connect to Wi-Fi to download the update")
+            return@withContext
+        }
         _state.value = State.Downloading(release, 0)
         val dir = File(context.cacheDir, "update").apply { deleteRecursively(); mkdirs() }
         val out = File(dir, "TubeGrab-build-${release.build}.apk")
