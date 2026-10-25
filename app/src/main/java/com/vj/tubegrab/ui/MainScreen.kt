@@ -10,6 +10,8 @@ import androidx.compose.material.icons.filled.PlayArrow
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,6 +54,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -86,6 +89,8 @@ import com.vj.tubegrab.MainViewModel
 import com.vj.tubegrab.SOURCE_ARCHIVE
 import com.vj.tubegrab.SOURCE_YOUTUBE
 import com.vj.tubegrab.SearchPane
+import com.vj.tubegrab.ExpiringFile
+import com.vj.tubegrab.ExpiryStore
 import com.vj.tubegrab.AppSettings
 import com.vj.tubegrab.NetworkMonitor
 import com.vj.tubegrab.SavedTrack
@@ -486,6 +491,22 @@ private fun DownloadButton(onDownload: (DlFormat) -> Unit, label: String = "Down
             modifier = Modifier.height(34.dp),
         ) { Text(label, style = MaterialTheme.typography.labelLarge) }
         DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+            val temporary by AppSettings.temporary.collectAsStateWithLifecycle()
+            DropdownMenuItem(
+                text = {
+                    Column {
+                        Text("Temporary download")
+                        Text(
+                            "Auto-delete after ${ExpiryStore.TEMP_DAYS} days",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                },
+                leadingIcon = { Checkbox(checked = temporary, onCheckedChange = null) },
+                onClick = { AppSettings.setTemporary(!temporary) },
+            )
+            HorizontalDivider()
             DlFormat.all.forEach { f ->
                 DropdownMenuItem(
                     text = { Text(f.label) },
@@ -505,8 +526,10 @@ private fun DownloadButton(onDownload: (DlFormat) -> Unit, label: String = "Down
 private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onCheckAppUpdate: () -> Unit) {
     val context = LocalContext.current
     val list = DownloadCenter.items
+    val tempFiles by ExpiryStore.files.collectAsStateWithLifecycle()
 
     Column(Modifier.fillMaxSize()) {
+        if (tempFiles.isNotEmpty()) TemporaryFilesSection(tempFiles)
         if (list.isEmpty()) {
             Box(Modifier.weight(1f)) { CenterHint("No downloads yet.\nFiles are saved to Music/TubeGrab and Movies/TubeGrab.") }
         } else {
@@ -603,6 +626,86 @@ private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onChe
     }
 }
 
+/** Collapsible list of downloads that will delete themselves, with "Keep" to cancel the timer. */
+@Composable
+private fun TemporaryFilesSection(files: List<ExpiringFile>) {
+    val context = LocalContext.current
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val stuck = files.filter { it.needsConfirm }
+
+    // Android asks the user to OK deleting files it won't let the app delete silently
+    val confirm = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartIntentSenderForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) ExpiryStore.removeAll(stuck.map { it.uri })
+    }
+
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp),
+    ) {
+        Column(Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+            Row(
+                Modifier.fillMaxWidth().clickable { expanded = !expanded },
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val next = files.minByOrNull { it.expiresAt }
+                Column(Modifier.weight(1f)) {
+                    Text("⏱ Temporary files (${files.size})", style = MaterialTheme.typography.titleSmall)
+                    if (next != null) {
+                        Text(
+                            "Next auto-delete in ${next.daysLeft()} day(s)",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+                Text(if (expanded) "Hide" else "Show", color = MaterialTheme.colorScheme.primary)
+            }
+
+            if (stuck.isNotEmpty()) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        "${stuck.size} expired file(s) need your OK to delete",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.weight(1f),
+                    )
+                    TextButton(onClick = {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            val req = MediaStore.createDeleteRequest(context.contentResolver, stuck.map { it.uri })
+                            confirm.launch(IntentSenderRequest.Builder(req.intentSender).build())
+                        } else {
+                            Toast.makeText(context, "Please delete them from the Files app", Toast.LENGTH_LONG).show()
+                            ExpiryStore.removeAll(stuck.map { it.uri })
+                        }
+                    }) { Text("Delete") }
+                }
+            }
+
+            if (expanded) {
+                files.forEach { f ->
+                    Row(
+                        Modifier.fillMaxWidth().clickable { openSaved(context, f.uri) },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(Modifier.weight(1f).padding(vertical = 4.dp)) {
+                            Text(f.title, style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(
+                                if (f.needsConfirm) "Expired" else "Deletes in ${f.daysLeft()} day(s)",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        TextButton(onClick = { ExpiryStore.remove(f.uri) }) { Text("Keep") }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /** Song list for a split album: play or delete each song. */
 @Composable
 private fun SplitTracks(s: DlState) {
@@ -621,7 +724,10 @@ private fun SplitTracks(s: DlState) {
 
     fun delete(t: SavedTrack) {
         when (val r = Saver.delete(context, t.uri)) {
-            is Saver.DeleteResult.Deleted -> DownloadCenter.removeTrack(s.key, t.uri)
+            is Saver.DeleteResult.Deleted -> {
+                DownloadCenter.removeTrack(s.key, t.uri)
+                ExpiryStore.remove(t.uri)
+            }
             is Saver.DeleteResult.NeedsConfirm -> {
                 pending = t.uri
                 confirmDelete.launch(IntentSenderRequest.Builder(r.sender).build())

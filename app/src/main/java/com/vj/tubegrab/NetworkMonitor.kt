@@ -19,10 +19,20 @@ object AppSettings {
     /** Default ON: never use mobile data for downloads. */
     val wifiOnly: StateFlow<Boolean> = _wifiOnly.asStateFlow()
 
+    private val _temporary = MutableStateFlow(false)
+    /** Last choice of "Temporary: auto-delete after 30 days" in the Download menu. */
+    val temporary: StateFlow<Boolean> = _temporary.asStateFlow()
+
     fun init(context: Context) {
         val p = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
         prefs = p
         _wifiOnly.value = p.getBoolean("wifi_only", true)
+        _temporary.value = p.getBoolean("temporary", false)
+    }
+
+    fun setTemporary(value: Boolean) {
+        prefs?.edit()?.putBoolean("temporary", value)?.apply()
+        _temporary.value = value
     }
 
     fun setWifiOnly(value: Boolean) {

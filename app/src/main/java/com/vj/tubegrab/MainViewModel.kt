@@ -117,7 +117,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun download(item: VideoItem, format: DlFormat) =
-        DownloadCenter.start(getApplication(), item, format)
+        DownloadCenter.start(getApplication(), item, format, temporary = AppSettings.temporary.value)
 
     fun updateEngine() {
         viewModelScope.launch {

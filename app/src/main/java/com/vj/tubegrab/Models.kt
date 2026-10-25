@@ -48,6 +48,7 @@ data class DlState(
     val savedUri: Uri? = null,
     val tracks: List<SavedTrack> = emptyList(),   // filled for split downloads
     val folder: String = "",                     // e.g. "Music/TubeGrab/Album name"
+    val temporary: Boolean = false,              // auto-delete after ExpiryStore.TEMP_DAYS
 )
 
 sealed class EngineStatus {

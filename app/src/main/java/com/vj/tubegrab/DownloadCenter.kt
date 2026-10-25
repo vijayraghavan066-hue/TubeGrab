@@ -27,10 +27,10 @@ object DownloadCenter {
 
     fun latestFor(videoId: String): DlState? = items.firstOrNull { it.item.id == videoId }
 
-    fun start(context: Context, item: VideoItem, format: DlFormat) {
+    fun start(context: Context, item: VideoItem, format: DlFormat, temporary: Boolean = false) {
         val app = context.applicationContext
         val key = "${item.id}_${System.currentTimeMillis()}"
-        items.add(0, DlState(key = key, item = item, format = format, message = "Waiting…"))
+        items.add(0, DlState(key = key, item = item, format = format, message = "Waiting…", temporary = temporary))
 
 
         jobs[key] = scope.launch {
@@ -41,7 +41,7 @@ object DownloadCenter {
                         update(key) { it.copy(status = DlStatus.Queued, progress = -1f, message = "Waiting for Wi-Fi…") }
                         NetworkMonitor.awaitDownloadsAllowed()
                     }
-                    val finished = slots.withPermit { runOnce(app, key, item, format) }
+                    val finished = slots.withPermit { runOnce(app, key, item, format, temporary) }
                     if (finished) break
                 }
             } catch (e: Throwable) {
@@ -60,7 +60,10 @@ object DownloadCenter {
     }
 
     /** One download attempt. Returns false if it was paused because Wi-Fi was lost. */
-    private suspend fun runOnce(app: Context, key: String, item: VideoItem, format: DlFormat): Boolean {
+    private suspend fun runOnce(
+        app: Context, key: String, item: VideoItem, format: DlFormat, temporary: Boolean,
+    ): Boolean {
+        val tempNote = if (temporary) " · auto-deletes in ${ExpiryStore.TEMP_DAYS} days" else ""
         if (key in canceled) throw CancellationException()
         // Could have switched to mobile data while waiting for a free slot
         if (!NetworkMonitor.downloadsAllowed()) return false
@@ -100,7 +103,10 @@ object DownloadCenter {
             result.files.forEachIndexed { i, f ->
                 update(key) { it.copy(progress = -1f, message = "Saving song ${i + 1} of ${result.files.size}…") }
                 val uri = Saver.publish(app, f, audio = true, subFolder = album)
-                if (uri != null) tracks += SavedTrack(f.nameWithoutExtension, uri)
+                if (uri != null) {
+                    tracks += SavedTrack(f.nameWithoutExtension, uri)
+                    if (temporary) ExpiryStore.add(uri, "${f.nameWithoutExtension} (${item.title})")
+                }
             }
             update(key) {
                 it.copy(
@@ -109,12 +115,13 @@ object DownloadCenter {
                     savedUri = tracks.firstOrNull()?.uri,
                     tracks = tracks,
                     folder = "Music/TubeGrab/$album",
-                    message = "${tracks.size} songs saved to Music/TubeGrab/$album",
+                    message = "${tracks.size} songs saved to Music/TubeGrab/$album$tempNote",
                 )
             }
         } else {
             update(key) { it.copy(progress = -1f, message = "Saving…") }
             val uri = Saver.publish(app, result.files.first(), format.isAudio)
+            if (temporary && uri != null) ExpiryStore.add(uri, item.title)
             val where = "${if (format.isAudio) "Music" else "Movies"}/TubeGrab"
             update(key) {
                 it.copy(
@@ -124,7 +131,7 @@ object DownloadCenter {
                     folder = where,
                     message = if (format == DlFormat.Mp3Split)
                         "No song chapters found in this video, so it was saved as one MP3 in $where"
-                    else "Saved to $where",
+                    else "Saved to $where$tempNote",
                 )
             }
         }
@@ -140,7 +147,7 @@ object DownloadCenter {
 
     fun retry(context: Context, state: DlState) {
         items.removeAll { it.key == state.key }
-        start(context, state.item, state.format)
+        start(context, state.item, state.format, state.temporary)
     }
 
     fun clearFinished() {
