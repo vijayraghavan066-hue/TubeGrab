@@ -4,22 +4,35 @@ Ad-free Android app to search YouTube inside the app and download a video (MP4) 
 Built with Kotlin + Jetpack Compose on top of [yt-dlp](https://github.com/yt-dlp/yt-dlp) (via youtubedl-android) and ffmpeg.
 
 ## What it does
-- **Search as you type:** suggestions while typing, plus a results list with thumbnails, duration, channel and views
-- **Paste a link:** a video or playlist URL works in the same box
+- **YouTube search:** suggestions appear as you type, results show thumbnails, duration, channel and views, and a pasted video or playlist link works too
+- **Other sites tab:** searches **Internet Archive** (public-domain movies, classic films, documentaries) and **Dailymotion** at the same time
 - **Share to TubeGrab:** in the YouTube app tap Share → TubeGrab to open that video here
-- **Download:** MP3, M4A (fast, no re-encode), or 360p / 720p / 1080p MP4, with live progress and cancel. Up to 2 run at once.
+- **Download formats:**
+  - MP3 audio
+  - **MP3 – split into songs:** cuts album or jukebox videos at their chapters into one MP3 per song, in `Music/TubeGrab/<video name>/`. You can play or delete each song from the Downloads tab.
+  - M4A audio (fast, no re-encode)
+  - MP4 video at 360p / 720p / 1080p
+- **Progress:** live progress and cancel, with up to 2 downloads at once
 - **Saved to:** `Music/TubeGrab` (audio) and `Movies/TubeGrab` (video), so files show up in your music player and gallery
-- **Auto-update:** yt-dlp updates itself on every launch, and the Downloads tab has an "Update engine" button
-- Tapping a thumbnail opens the video in YouTube
+- **App updates like the Play Store:** on launch the app checks this repo's latest release and shows an **Update available** bar, then **Update → Install**. You can also tap **Check app update** in the Downloads tab.
+- **Engine updates:** yt-dlp updates itself on every launch, and the Downloads tab has an **Update engine** button
 - Works on Android 7.0 and newer
+
+## Version history
+- **1.0:** YouTube search plus MP3/MP4 downloads
+- **1.1:** Other sites tab (Internet Archive + Dailymotion), fixed signing key so updates install over the old version
+- **1.2:** In-app updater, plus MP3 split into songs with per-song play and delete
+
+## How updates are built
+Every push to `main` runs the GitHub Action, which builds the APKs and publishes a release tagged `build-N`. N is the GitHub run number, and it's also the app's versionCode. The in-app updater compares the two numbers and downloads the APK that matches the phone's CPU.
+Keep this repo **public** so the updater can see releases. If you make it private, the updater needs a separate public APK repo.
 
 ## Get the APK, option A: GitHub (no PC setup needed)
 1. Create a free account at github.com, then click **New repository** and name it `TubeGrab` (Private is fine).
 2. On the repo page click **uploading an existing file**, drag in **everything inside this folder** (including the hidden `.github` folder), then click **Commit**.
    - If the `.github` folder doesn't upload from your browser, create the file `.github/workflows/build.yml` by hand with **Add file → Create new file** and paste in its contents.
 3. Open the **Actions** tab and wait for "Build APK" to turn green (about 5–8 min).
-4. Click the run, scroll to **Artifacts**, and download **TubeGrab-APKs** (a zip).
-5. Unzip it and pick:
+4. Open the repo's **Releases** (right side of the repo page) and download the APK straight to your phone:
    - `app-arm64-v8a-release.apk` for almost any phone from the last ~8 years (smallest)
    - `app-universal-release.apk` if you're not sure (bigger, works everywhere)
 
