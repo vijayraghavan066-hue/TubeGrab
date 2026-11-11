@@ -53,3 +53,23 @@ Newer yt-dlp works best on YouTube with a JavaScript runtime (Deno). This app do
 
 ## Fair use
 Only download content you have the right to keep (your own uploads, Creative Commons, etc.). Downloading may go against YouTube's Terms of Service. This app is for personal use and isn't meant for the Play Store.
+
+---
+
+# 📦 More apps in this repo
+
+This repo now holds several of Vj's apps. Each folder is its own app with its own APK, and every push builds all of them into the same GitHub Release.
+
+| Folder | App | APK in the release |
+|---|---|---|
+| `app/` | TubeGrab | `app-arm64-v8a-release.apk` (or universal) |
+| `spellbee/` | 🐝 Spell Bee Champ | `SpellBeeChamp-release.apk` |
+
+## 🐝 Spell Bee Champ
+Kids' spelling bee trainer that works like the real competition.
+- **5 levels:** Classroom → School → Regional → National Prelims → National Finals. Score 80% to unlock the next; parents can unlock all.
+- **Voice pronouncer** says each word. Kids ask (tap or by voice) for the definition, a sentence, part of speech, language of origin, other pronunciations, or "say it slowly".
+- **Spell out loud or type.** The app shows what it heard ("C - A - T") before you **Lock it in**.
+- **Competition** (one miss and the bell rings) or **Practice** (keep going). Optional timer: 2 min / 90 sec per word.
+- **Ask the pronouncer** on the home screen: "How does the spelling bee work?", "Other ways to pronounce tomato?"
+- Add words in `spellbee/src/main/assets/words.json`.

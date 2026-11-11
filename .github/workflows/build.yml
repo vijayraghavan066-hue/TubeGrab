@@ -26,8 +26,10 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: TubeGrab-APKs
-          path: app/build/outputs/apk/release/*.apk
+          name: Apps-APKs
+          path: |
+            app/build/outputs/apk/release/*.apk
+            spellbee/build/outputs/apk/release/*.apk
 
       # Publish the APKs as a GitHub Release so they can be downloaded directly on a phone
       - name: Publish release
@@ -35,6 +37,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
-          name: TubeGrab build ${{ github.run_number }}
+          name: Apps build ${{ github.run_number }}
           make_latest: true
-          files: app/build/outputs/apk/release/*.apk
+          files: |
+            app/build/outputs/apk/release/*.apk
+            spellbee/build/outputs/apk/release/*.apk

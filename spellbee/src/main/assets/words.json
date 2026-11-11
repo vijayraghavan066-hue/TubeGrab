@@ -1,0 +1,1134 @@
+[
+ {
+  "level": 1,
+  "w": "rabbit",
+  "pos": "noun",
+  "def": "a small furry animal with long ears that hops",
+  "sent": "The rabbit nibbled a carrot in the garden.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "jacket",
+  "pos": "noun",
+  "def": "a short coat that covers the arms and upper body",
+  "sent": "Zip up your jacket before recess.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "pencil",
+  "pos": "noun",
+  "def": "a writing tool with a stick of graphite inside wood",
+  "sent": "Sharpen your pencil before the test.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "kitten",
+  "pos": "noun",
+  "def": "a young cat",
+  "sent": "The kitten chased a ball of yarn.",
+  "origin": "Anglo-French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "garden",
+  "pos": "noun",
+  "def": "a piece of ground where flowers or vegetables are grown",
+  "sent": "Grandma grows tomatoes in her garden.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "happy",
+  "pos": "adjective",
+  "def": "feeling pleased and glad",
+  "sent": "The puppy looked happy to see us.",
+  "origin": "Old Norse",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "little",
+  "pos": "adjective",
+  "def": "small in size",
+  "sent": "A little bird sat on the fence.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "friend",
+  "pos": "noun",
+  "def": "a person you like and trust",
+  "sent": "My friend shared her lunch with me.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "because",
+  "pos": "conjunction",
+  "def": "for the reason that",
+  "sent": "We stayed inside because it was raining.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "people",
+  "pos": "noun",
+  "def": "men, women, and children",
+  "sent": "Many people came to the school fair.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "water",
+  "pos": "noun",
+  "def": "the clear liquid that falls as rain and fills rivers",
+  "sent": "Drink plenty of water on a hot day.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "pretty",
+  "pos": "adjective",
+  "def": "pleasant to look at",
+  "sent": "She picked a pretty flower for her mom.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "animal",
+  "pos": "noun",
+  "def": "a living thing that can move and eat, like a dog or a fish",
+  "sent": "The zoo has an animal from every continent.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "yellow",
+  "pos": "adjective",
+  "def": "having the color of a ripe banana",
+  "sent": "The school bus is bright yellow.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "window",
+  "pos": "noun",
+  "def": "an opening in a wall, usually filled with glass, that lets in light",
+  "sent": "Look out the window at the snow.",
+  "origin": "Old Norse",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "basket",
+  "pos": "noun",
+  "def": "a container made of woven strips, used for carrying things",
+  "sent": "She filled the basket with apples.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "picnic",
+  "pos": "noun",
+  "def": "a meal eaten outdoors",
+  "sent": "We had a picnic by the lake.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "pumpkin",
+  "pos": "noun",
+  "def": "a large round orange fruit that grows on a vine",
+  "sent": "We carved a pumpkin for Halloween.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "thumb",
+  "pos": "noun",
+  "def": "the short, thick finger on the side of the hand",
+  "sent": "He gave me a thumbs-up after my thumb healed.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "tomato",
+  "pos": "noun",
+  "def": "a soft, juicy red fruit eaten as a vegetable",
+  "sent": "Dad sliced a tomato for the sandwich.",
+  "origin": "Nahuatl",
+  "say": "",
+  "alt": [
+   "tuh-MAH-toe"
+  ]
+ },
+ {
+  "level": 1,
+  "w": "honey",
+  "pos": "noun",
+  "def": "a sweet, sticky food made by bees",
+  "sent": "I put honey in my tea.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "circle",
+  "pos": "noun",
+  "def": "a round shape with every point the same distance from the center",
+  "sent": "Draw a circle around the right answer.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "favorite",
+  "pos": "adjective",
+  "def": "liked more than all others",
+  "sent": "Pizza is my favorite food.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "vacuum",
+  "pos": "verb",
+  "def": "to clean using a machine that sucks up dirt",
+  "sent": "Please vacuum the living room rug.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "Wednesday",
+  "pos": "noun",
+  "def": "the day of the week after Tuesday",
+  "sent": "Our library day is Wednesday.",
+  "origin": "Old English",
+  "say": "Wenz-day",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "February",
+  "pos": "noun",
+  "def": "the second month of the year",
+  "sent": "February is the shortest month.",
+  "origin": "Latin",
+  "say": "",
+  "alt": [
+   "FEB-yoo-air-ee"
+  ]
+ },
+ {
+  "level": 2,
+  "w": "calendar",
+  "pos": "noun",
+  "def": "a chart showing the days, weeks, and months of a year",
+  "sent": "Mark the party on the calendar.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "necessary",
+  "pos": "adjective",
+  "def": "needed; required",
+  "sent": "A helmet is necessary when you ride a bike.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "receive",
+  "pos": "verb",
+  "def": "to get or be given something",
+  "sent": "Did you receive my letter?",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "separate",
+  "pos": "verb",
+  "def": "to keep apart or divide",
+  "sent": "Separate the red beads from the blue ones.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "squirrel",
+  "pos": "noun",
+  "def": "a small animal with a bushy tail that lives in trees",
+  "sent": "A squirrel buried an acorn in the yard.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "island",
+  "pos": "noun",
+  "def": "a piece of land surrounded by water",
+  "sent": "We took a ferry to the island.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "caramel",
+  "pos": "noun",
+  "def": "a chewy candy made from cooked sugar and butter",
+  "sent": "The apple was dipped in caramel.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "CAR-mul"
+  ]
+ },
+ {
+  "level": 2,
+  "w": "route",
+  "pos": "noun",
+  "def": "the way taken to get from one place to another",
+  "sent": "The bus took a new route to school.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "rowt"
+  ]
+ },
+ {
+  "level": 2,
+  "w": "often",
+  "pos": "adverb",
+  "def": "many times; frequently",
+  "sent": "We often walk the dog after dinner.",
+  "origin": "Old English",
+  "say": "",
+  "alt": [
+   "OFF-ten"
+  ]
+ },
+ {
+  "level": 2,
+  "w": "bicycle",
+  "pos": "noun",
+  "def": "a vehicle with two wheels that you pedal",
+  "sent": "She rode her bicycle to the park.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "ocean",
+  "pos": "noun",
+  "def": "the huge body of salt water that covers most of Earth",
+  "sent": "Whales swim in the ocean.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "guitar",
+  "pos": "noun",
+  "def": "a musical instrument with strings that you strum or pluck",
+  "sent": "He played a song on his guitar.",
+  "origin": "Spanish",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "library",
+  "pos": "noun",
+  "def": "a place where books are kept for people to read or borrow",
+  "sent": "I borrowed three books from the library.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "knowledge",
+  "pos": "noun",
+  "def": "facts and skills you have learned",
+  "sent": "Reading builds your knowledge.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "surprise",
+  "pos": "noun",
+  "def": "something unexpected",
+  "sent": "The cake was a big surprise.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "pecan",
+  "pos": "noun",
+  "def": "a sweet nut that grows on a tall tree",
+  "sent": "Mom baked a pecan pie.",
+  "origin": "Algonquian",
+  "say": "",
+  "alt": [
+   "PEE-can"
+  ]
+ },
+ {
+  "level": 2,
+  "w": "almond",
+  "pos": "noun",
+  "def": "an oval nut with a brown skin",
+  "sent": "She sprinkled almond slices on her oatmeal.",
+  "origin": "Greek",
+  "say": "",
+  "alt": [
+   "AH-mund"
+  ]
+ },
+ {
+  "level": 2,
+  "w": "lettuce",
+  "pos": "noun",
+  "def": "a leafy green vegetable used in salads",
+  "sent": "Wash the lettuce before making the salad.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "either",
+  "pos": "pronoun",
+  "def": "one or the other of two",
+  "sent": "You can pick either of the two books.",
+  "origin": "Old English",
+  "say": "",
+  "alt": [
+   "EYE-ther"
+  ]
+ },
+ {
+  "level": 3,
+  "w": "rhythm",
+  "pos": "noun",
+  "def": "a regular, repeated pattern of sounds or beats",
+  "sent": "Clap along to the rhythm of the song.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "conscience",
+  "pos": "noun",
+  "def": "the inner sense of what is right and wrong",
+  "sent": "His conscience told him to return the wallet.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "mischievous",
+  "pos": "adjective",
+  "def": "playfully causing small trouble",
+  "sent": "The mischievous puppy hid my shoe.",
+  "origin": "Anglo-French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "silhouette",
+  "pos": "noun",
+  "def": "a dark outline of something seen against a light background",
+  "sent": "We saw the silhouette of a cat in the window.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "camouflage",
+  "pos": "noun",
+  "def": "colors or patterns that help something blend in with its surroundings",
+  "sent": "The lizard's camouflage made it hard to spot.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "pharaoh",
+  "pos": "noun",
+  "def": "a ruler of ancient Egypt",
+  "sent": "The pharaoh was buried with gold treasures.",
+  "origin": "Egyptian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "bureau",
+  "pos": "noun",
+  "def": "a chest of drawers, or a government office",
+  "sent": "Her socks are in the top drawer of the bureau.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "tongue",
+  "pos": "noun",
+  "def": "the movable muscle in the mouth used for tasting and talking",
+  "sent": "The giraffe has a very long tongue.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "leisure",
+  "pos": "noun",
+  "def": "free time when you are not working",
+  "sent": "Reading is how she spends her leisure time.",
+  "origin": "Anglo-French",
+  "say": "",
+  "alt": [
+   "LEH-zhur"
+  ]
+ },
+ {
+  "level": 3,
+  "w": "schedule",
+  "pos": "noun",
+  "def": "a plan that lists times when things will happen",
+  "sent": "Check the schedule to see when the game starts.",
+  "origin": "Greek",
+  "say": "",
+  "alt": [
+   "SHED-yool"
+  ]
+ },
+ {
+  "level": 3,
+  "w": "dilemma",
+  "pos": "noun",
+  "def": "a situation where you must choose between two difficult options",
+  "sent": "Choosing between two best friends' parties was a dilemma.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "exaggerate",
+  "pos": "verb",
+  "def": "to make something seem bigger or more important than it is",
+  "sent": "Don't exaggerate the size of the fish you caught.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "occasion",
+  "pos": "noun",
+  "def": "a special event or time",
+  "sent": "Her birthday was a happy occasion.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "restaurant",
+  "pos": "noun",
+  "def": "a place where people pay to eat meals",
+  "sent": "We ate dinner at an Italian restaurant.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "sergeant",
+  "pos": "noun",
+  "def": "an officer rank in the army or police",
+  "sent": "The sergeant gave orders to the soldiers.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "guarantee",
+  "pos": "noun",
+  "def": "a promise that something will happen or work",
+  "sent": "The toaster comes with a one-year guarantee.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "pneumonia",
+  "pos": "noun",
+  "def": "a serious illness that affects the lungs",
+  "sent": "The doctor treated his pneumonia with medicine.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "envelope",
+  "pos": "noun",
+  "def": "a flat paper cover for a letter",
+  "sent": "Seal the envelope and add a stamp.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "AHN-vuh-lope"
+  ]
+ },
+ {
+  "level": 3,
+  "w": "niche",
+  "pos": "noun",
+  "def": "a small hollow in a wall, or a place that suits someone well",
+  "sent": "A statue stood in the niche by the stairs.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "neesh"
+  ]
+ },
+ {
+  "level": 3,
+  "w": "hygiene",
+  "pos": "noun",
+  "def": "habits that keep you clean and healthy",
+  "sent": "Brushing your teeth is part of good hygiene.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "lieutenant",
+  "pos": "noun",
+  "def": "an officer rank in the military or police",
+  "sent": "The lieutenant led the team across the river.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "lef-TEN-ant"
+  ]
+ },
+ {
+  "level": 4,
+  "w": "onomatopoeia",
+  "pos": "noun",
+  "def": "the use of words that sound like what they describe, such as buzz or sizzle",
+  "sent": "Comic books are full of onomatopoeia like boom and pow.",
+  "origin": "Greek",
+  "say": "on-uh-mat-uh-PEE-uh",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "bourgeois",
+  "pos": "adjective",
+  "def": "relating to the middle class and its habits",
+  "sent": "The novel pokes fun at bourgeois manners.",
+  "origin": "French",
+  "say": "boorzh-WAH",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "chauffeur",
+  "pos": "noun",
+  "def": "a person whose job is to drive someone around",
+  "sent": "The chauffeur opened the car door.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "SHOW-fur"
+  ]
+ },
+ {
+  "level": 4,
+  "w": "connoisseur",
+  "pos": "noun",
+  "def": "an expert judge of art, food, or taste",
+  "sent": "My uncle is a connoisseur of fine cheese.",
+  "origin": "French",
+  "say": "kon-uh-SUR",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "fuchsia",
+  "pos": "noun",
+  "def": "a vivid purplish-pink color",
+  "sent": "She wore a fuchsia dress to the dance.",
+  "origin": "German",
+  "say": "FEW-shuh",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "renaissance",
+  "pos": "noun",
+  "def": "a revival or rebirth, especially of art and learning",
+  "sent": "The town is having a renaissance of live music.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "REN-uh-sahns"
+  ]
+ },
+ {
+  "level": 4,
+  "w": "pseudonym",
+  "pos": "noun",
+  "def": "a made-up name used by an author",
+  "sent": "Mark Twain was a pseudonym.",
+  "origin": "Greek",
+  "say": "SOO-duh-nim",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "bouillon",
+  "pos": "noun",
+  "def": "a clear broth made by simmering meat or vegetables",
+  "sent": "Add a cube of bouillon to the soup.",
+  "origin": "French",
+  "say": "BOOL-yon",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "kaleidoscope",
+  "pos": "noun",
+  "def": "a tube with mirrors and colored pieces that make changing patterns",
+  "sent": "Turn the kaleidoscope to see new shapes.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "maneuver",
+  "pos": "noun",
+  "def": "a skillful movement or plan",
+  "sent": "The pilot made a tricky maneuver to land.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "rendezvous",
+  "pos": "noun",
+  "def": "an arranged meeting at a set time and place",
+  "sent": "We planned a rendezvous at the fountain.",
+  "origin": "French",
+  "say": "RON-day-voo",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "surveillance",
+  "pos": "noun",
+  "def": "close watch kept over someone or something",
+  "sent": "The bank lobby is under video surveillance.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "naive",
+  "pos": "adjective",
+  "def": "lacking experience; too trusting",
+  "sent": "It was naive to think the test would be easy.",
+  "origin": "French",
+  "say": "nye-EEV",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "vinaigrette",
+  "pos": "noun",
+  "def": "a salad dressing of oil and vinegar",
+  "sent": "Toss the greens with vinaigrette.",
+  "origin": "French",
+  "say": "vin-uh-GRET",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "quinoa",
+  "pos": "noun",
+  "def": "a grain-like seed cooked and eaten like rice",
+  "sent": "We had quinoa with roasted vegetables.",
+  "origin": "Quechua",
+  "say": "KEEN-wah",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "archipelago",
+  "pos": "noun",
+  "def": "a group of islands",
+  "sent": "Hawaii is an archipelago in the Pacific.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "homage",
+  "pos": "noun",
+  "def": "something done to show respect or honor",
+  "sent": "The mural is an homage to the town's founders.",
+  "origin": "French",
+  "say": "",
+  "alt": [
+   "oh-MAHZH"
+  ]
+ },
+ {
+  "level": 4,
+  "w": "liaison",
+  "pos": "noun",
+  "def": "a person who connects or communicates between groups",
+  "sent": "She is the liaison between the school and parents.",
+  "origin": "French",
+  "say": "lee-AY-zon",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "acquiesce",
+  "pos": "verb",
+  "def": "to agree quietly without arguing",
+  "sent": "He chose to acquiesce to the new rules.",
+  "origin": "Latin",
+  "say": "ak-wee-ESS",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "bureaucracy",
+  "pos": "noun",
+  "def": "a system of government offices with many rules",
+  "sent": "Getting a permit meant dealing with bureaucracy.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "mnemonic",
+  "pos": "noun",
+  "def": "a trick that helps you remember something",
+  "sent": "Use a mnemonic to remember the planets.",
+  "origin": "Greek",
+  "say": "nih-MON-ik",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "chrysanthemum",
+  "pos": "noun",
+  "def": "a garden flower with many layers of petals",
+  "sent": "A chrysanthemum bloomed by the porch.",
+  "origin": "Greek",
+  "say": "krih-SAN-thuh-mum",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "pococurante",
+  "pos": "adjective",
+  "def": "not caring much; indifferent",
+  "sent": "His pococurante shrug showed he did not mind losing.",
+  "origin": "Italian",
+  "say": "poh-koh-koo-RAN-tee",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "cymotrichous",
+  "pos": "adjective",
+  "def": "having wavy hair",
+  "sent": "The portrait showed a cymotrichous young poet.",
+  "origin": "Greek",
+  "say": "sy-MAH-trih-kus",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "appoggiatura",
+  "pos": "noun",
+  "def": "a grace note that borrows time from the note after it",
+  "sent": "The singer added an appoggiatura before the final note.",
+  "origin": "Italian",
+  "say": "uh-pah-juh-TOOR-uh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "Weltschmerz",
+  "pos": "noun",
+  "def": "sadness about the troubles of the world",
+  "sent": "Rainy news days filled him with Weltschmerz.",
+  "origin": "German",
+  "say": "VELT-shmairts",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "succedaneum",
+  "pos": "noun",
+  "def": "a substitute for something else",
+  "sent": "Honey served as a succedaneum for sugar.",
+  "origin": "Latin",
+  "say": "suck-sih-DAY-nee-um",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "eudaemonic",
+  "pos": "adjective",
+  "def": "producing happiness and well-being",
+  "sent": "Helping others can be a eudaemonic activity.",
+  "origin": "Greek",
+  "say": "yoo-dih-MAH-nik",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "guerdon",
+  "pos": "noun",
+  "def": "a reward",
+  "sent": "A gold medal was the guerdon for her hard work.",
+  "origin": "Old French",
+  "say": "GUR-dun",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "stromuhr",
+  "pos": "noun",
+  "def": "an instrument that measures how fast blood flows",
+  "sent": "The scientist used a stromuhr in the experiment.",
+  "origin": "German",
+  "say": "SHTROH-moor",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "knaidel",
+  "pos": "noun",
+  "def": "a small dumpling, often served in soup",
+  "sent": "Grandpa dropped a knaidel into the chicken soup.",
+  "origin": "Yiddish",
+  "say": "KNAY-dul",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "chiaroscurist",
+  "pos": "noun",
+  "def": "an artist skilled at using strong light and shadow",
+  "sent": "The chiaroscurist painted a candle glowing in the dark.",
+  "origin": "Italian",
+  "say": "kee-ar-uh-SKYOOR-ist",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "autochthonous",
+  "pos": "adjective",
+  "def": "native to a place; originating where found",
+  "sent": "These autochthonous plants grow nowhere else.",
+  "origin": "Greek",
+  "say": "aw-TOCK-thuh-nus",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "scherenschnitte",
+  "pos": "noun",
+  "def": "the art of cutting paper into detailed designs",
+  "sent": "Her scherenschnitte showed a tiny village.",
+  "origin": "German",
+  "say": "SHER-un-shnit-uh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "feuilleton",
+  "pos": "noun",
+  "def": "a section of a newspaper for stories, reviews, and light writing",
+  "sent": "He read the feuilleton every Sunday.",
+  "origin": "French",
+  "say": "FOY-uh-tawn",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "marocain",
+  "pos": "noun",
+  "def": "a ribbed crepe fabric",
+  "sent": "The gown was sewn from silk marocain.",
+  "origin": "French",
+  "say": "MAIR-uh-kayn",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "sacrilegious",
+  "pos": "adjective",
+  "def": "showing disrespect toward something sacred",
+  "sent": "Spilling paint on the old temple seemed sacrilegious.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "daguerreotype",
+  "pos": "noun",
+  "def": "an early kind of photograph made on a silver-coated plate",
+  "sent": "The museum displayed a daguerreotype from 1845.",
+  "origin": "French",
+  "say": "duh-GAIR-uh-type",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "smaragdine",
+  "pos": "adjective",
+  "def": "emerald green in color",
+  "sent": "The lake shone with a smaragdine glow.",
+  "origin": "Greek",
+  "say": "smuh-RAG-din",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "cappelletti",
+  "pos": "noun",
+  "def": "small stuffed pasta shaped like little hats",
+  "sent": "We ate cappelletti in broth.",
+  "origin": "Italian",
+  "say": "kap-uh-LET-ee",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "logorrhea",
+  "pos": "noun",
+  "def": "excessive talking",
+  "sent": "His logorrhea made the meeting last for hours.",
+  "origin": "Greek",
+  "say": "law-guh-REE-uh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "prospicience",
+  "pos": "noun",
+  "def": "the act of looking ahead; foresight",
+  "sent": "Her prospicience helped the team plan for rain.",
+  "origin": "Latin",
+  "say": "pro-SPISH-ee-ence",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "ophthalmology",
+  "pos": "noun",
+  "def": "the branch of medicine that deals with the eyes",
+  "sent": "She wants to study ophthalmology and become an eye doctor.",
+  "origin": "Greek",
+  "say": "off-thal-MOL-uh-jee",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "psittacism",
+  "pos": "noun",
+  "def": "repeating words without understanding them, like a parrot",
+  "sent": "Memorizing without thinking is just psittacism.",
+  "origin": "Latin",
+  "say": "SIT-uh-siz-um",
+  "alt": []
+ }
+]

@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TubeGrab"
-include(":app")
+include(":app")       // TubeGrab
+include(":spellbee")  // Spell Bee Champ
