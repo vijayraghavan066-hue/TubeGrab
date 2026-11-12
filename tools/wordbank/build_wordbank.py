@@ -37,7 +37,10 @@ BAN_TEXT = re.compile(
     r"erot\w*|porn\w*|orgasm\w*|masturbat\w*|copulat\w*|intercourse|prostitut\w*|brothel|rape\w*|"
     r"incest|fetish\w*|nud(e|ity)|naked|feces|faec\w*|excrement|urin\w*|vomit\w*|drunk\w*|"
     r"narcotic\w*|cocaine|heroin|marijuana|cannabis|opium|suicid\w*|murder\w*|tortur\w*|slur|"
-    r"racis\w*|vulgar\w*|obscen\w*|swear\w*|curse word|profan\w*|nazi\w*|lynch\w*)\b", re.I)
+    r"racis\w*|vulgar\w*|obscen\w*|swear\w*|curse word|profan\w*|nazi\w*|lynch\w*|castrat\w*|ovulat\w*|"
+    r"menstru\w*|pregnan\w*|childbirth|uter\w*|womb|ovar\w*|puerper\w*|contracept\w*|abortion\w*|"
+    r"bowel\w*|rectum|disease of|venereal|lust\w*|seduc\w*|lewd|kinky|gay|lesbian|homosexual\w*|"
+    r"execution|behead\w*|corpse|genocide|slave\w*|whore|bitch\w*|bastard\w*|damn\w*|hell)\b", re.I)
 BAN_CATEGORY = re.compile(r"(swear|vulgar|sex|slur|offensive|pejorative|derogatory|drug|genital|"
                           r"prostitut|pornograph|obscen|ethnic|insult)", re.I)
 
@@ -49,6 +52,8 @@ ETYM_TEMPLATES = {"inh", "inh+", "der", "der+", "bor", "bor+", "lbor", "uder", "
 
 
 def norm_lang(name):
+    name = re.sub(r"^(Borrowed|Learned borrowing|Unadapted borrowing|Semi-learned borrowing|Derived|Inherited)\s+from\s+", "", name, flags=re.I)
+    name = re.sub(r"^(From|from)\s+", "", name)
     for key, val in LANG_FIX:
         if key in name:
             return val
@@ -132,9 +137,9 @@ def pick(entry, word):
 
 def level_for(word, zipf):
     n = len(word)
-    if zipf >= 4.2 and n <= 8:
+    if zipf >= 4.4 and n <= 7:
         return 1
-    if zipf >= 3.5:
+    if zipf >= 3.6:
         return 2
     if zipf >= 2.8:
         return 3
@@ -184,7 +189,7 @@ def main():
     except FileNotFoundError:
         pass
 
-    best, dropped, seen = {}, set(), 0
+    best, dropped, seen, headwords = {}, set(), 0, set()
     for line in open_stream(args.input):
         seen += 1
         if seen % 200000 == 0:
@@ -199,6 +204,8 @@ def main():
         if word in dropped:
             continue
         pos = POS.get(e.get("pos"))
+        if pos:
+            headwords.add(word)
         got = pick(e, word)
         if got is None:
             dropped.add(word)
@@ -211,6 +218,39 @@ def main():
         score = (2 if sentence else 0) + (1 if origin else 0)
         if word not in best or score > best[word][0]:
             best[word] = (score, pos, definition, sentence, origin)
+
+    def base_forms(w):
+        out = []
+        if w.endswith("ies"):
+            out.append(w[:-3] + "y")
+        if w.endswith("es"):
+            out.append(w[:-2])
+        if w.endswith("s") and not w.endswith("ss"):
+            out.append(w[:-1])
+        return out
+
+    def verb_forms(w):
+        out = []
+        if len(w) >= 6 and w.endswith("ied"):
+            out.append(w[:-3] + "y")
+        if len(w) >= 5 and w.endswith("ed"):
+            out += [w[:-2], w[:-1]]
+            if w[-3] == w[-4]:
+                out.append(w[:-3])
+        if len(w) >= 6 and w.endswith("ing"):
+            out += [w[:-3], w[:-3] + "e"]
+            if w[-4] == w[-5]:
+                out.append(w[:-4])
+        return out
+
+    inflected = set()
+    for word, (score, pos, *_rest) in best.items():
+        if any(b in headwords for b in base_forms(word)):
+            inflected.add(word)  # plurals / -s forms: "tears", "studs"
+        elif pos != "noun" and any(b in headwords for b in verb_forms(word)):
+            inflected.add(word)  # "flooded", "conflicting" (but keep nouns like "building")
+    for word in inflected:
+        best.pop(word)
 
     levels = {i: [] for i in range(1, 6)}
     for word, (score, pos, definition, sentence, origin) in best.items():
@@ -225,8 +265,8 @@ def main():
     out, report = [], []
     for lv, items in levels.items():
         if lv == 5:
-            rng.shuffle(items)
-            items.sort(key=lambda x: -x[0])  # with sentence/origin first, otherwise random
+            # Rare but real: complete entries first, then the least obscure of the rare words
+            items.sort(key=lambda x: (-x[0], -x[1], x[2]))
         else:
             items.sort(key=lambda x: (-x[0], -x[1]))  # complete entries first, then most common
         chosen = items[: args.per_level]
@@ -240,6 +280,7 @@ def main():
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     origins = Counter(r[5] or "(none)" for r in out).most_common(15)
     report.append("Top origins: " + ", ".join(f"{k} {v}" for k, v in origins))
+    report.append(f"Removed {len(inflected):,} plural/-ed/-ing forms")
     report.append(f"Total {len(out):,} words from {seen:,} entries; {len(dropped):,} words dropped by safety filters")
     print("\n".join(report))
 
