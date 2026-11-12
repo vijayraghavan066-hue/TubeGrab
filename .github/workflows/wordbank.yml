@@ -3,6 +3,8 @@ name: Build word bank
 # Run from the Actions tab ("Run workflow") whenever you want to refresh Spell Bee's
 # Wiktionary words, e.g. after adding words to tools/wordbank/blocklist.txt.
 on:
+  push:
+    branches: [wiktionary-words]
   workflow_dispatch:
     inputs:
       per_level:
@@ -27,7 +29,7 @@ jobs:
           pip install wordfreq
           python tools/wordbank/build_wordbank.py \
             --out spellbee/src/main/assets/words_wiktionary.json \
-            --per-level ${{ inputs.per_level }} | tee wordbank-report.txt
+            --per-level ${{ inputs.per_level || '3000' }} | tee wordbank-report.txt
           ls -lh spellbee/src/main/assets/words_wiktionary.json
 
       - uses: actions/upload-artifact@v4
