@@ -1130,5 +1130,1567 @@
   "origin": "Latin",
   "say": "SIT-uh-siz-um",
   "alt": []
+ },
+ {
+  "level": 1,
+  "w": "apple",
+  "pos": "noun",
+  "def": "a round fruit with red, green, or yellow skin",
+  "sent": "I packed an apple for lunch.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "balloon",
+  "pos": "noun",
+  "def": "a rubber bag filled with air or gas",
+  "sent": "The red balloon floated up to the ceiling.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "bubble",
+  "pos": "noun",
+  "def": "a thin ball of liquid filled with air",
+  "sent": "She blew a giant bubble with her gum.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "candle",
+  "pos": "noun",
+  "def": "a stick of wax with a wick that you can light",
+  "sent": "Blow out the candle and make a wish.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "cookie",
+  "pos": "noun",
+  "def": "a small, flat, sweet baked treat",
+  "sent": "Grandma baked a chocolate chip cookie for me.",
+  "origin": "Dutch",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "dinner",
+  "pos": "noun",
+  "def": "the main meal of the day, usually eaten in the evening",
+  "sent": "We eat dinner together at six.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "doctor",
+  "pos": "noun",
+  "def": "a person trained to treat sick or hurt people",
+  "sent": "The doctor checked my ears.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "eagle",
+  "pos": "noun",
+  "def": "a large bird of prey with strong wings and sharp eyes",
+  "sent": "An eagle soared high over the lake.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "family",
+  "pos": "noun",
+  "def": "a group of people who are related to each other",
+  "sent": "My family went camping last summer.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "finger",
+  "pos": "noun",
+  "def": "one of the five long parts at the end of the hand",
+  "sent": "She pointed her finger at the map.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "flower",
+  "pos": "noun",
+  "def": "the colorful part of a plant that makes seeds",
+  "sent": "A bee landed on the flower.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "forest",
+  "pos": "noun",
+  "def": "a large area covered with trees",
+  "sent": "Deer live deep in the forest.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "giant",
+  "pos": "noun",
+  "def": "a huge person or creature in stories",
+  "sent": "The giant lived at the top of the beanstalk.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "hammer",
+  "pos": "noun",
+  "def": "a tool with a heavy head used for hitting nails",
+  "sent": "Dad used a hammer to fix the fence.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "helmet",
+  "pos": "noun",
+  "def": "a hard hat that protects your head",
+  "sent": "Always wear a helmet when you skate.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "jungle",
+  "pos": "noun",
+  "def": "a thick tropical forest",
+  "sent": "Monkeys swing through the jungle.",
+  "origin": "Hindi",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "kitchen",
+  "pos": "noun",
+  "def": "the room where food is cooked",
+  "sent": "Mom is cooking in the kitchen.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "lemon",
+  "pos": "noun",
+  "def": "a sour yellow fruit",
+  "sent": "Squeeze a lemon into the water.",
+  "origin": "Persian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "mitten",
+  "pos": "noun",
+  "def": "a glove with one part for the thumb and one for the other fingers",
+  "sent": "I lost a mitten in the snow.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "napkin",
+  "pos": "noun",
+  "def": "a piece of cloth or paper used to wipe your mouth and hands",
+  "sent": "Put a napkin on your lap.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "orange",
+  "pos": "noun",
+  "def": "a round, juicy citrus fruit with a thick peel",
+  "sent": "He peeled an orange at snack time.",
+  "origin": "Sanskrit",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "paper",
+  "pos": "noun",
+  "def": "thin sheets used for writing, drawing, or wrapping",
+  "sent": "Fold the paper in half.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "pillow",
+  "pos": "noun",
+  "def": "a soft cushion for your head",
+  "sent": "I sleep with a soft pillow.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "puppy",
+  "pos": "noun",
+  "def": "a young dog",
+  "sent": "The puppy wagged its tail.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "rocket",
+  "pos": "noun",
+  "def": "a vehicle powered by burning fuel that can fly into space",
+  "sent": "The rocket blasted off into space.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "sandwich",
+  "pos": "noun",
+  "def": "two slices of bread with food in between",
+  "sent": "I had a cheese sandwich.",
+  "origin": "English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "shadow",
+  "pos": "noun",
+  "def": "a dark shape made when something blocks light",
+  "sent": "My shadow follows me on sunny days.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "silver",
+  "pos": "noun",
+  "def": "a shiny, gray-white metal",
+  "sent": "She wore a bracelet made of silver.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "summer",
+  "pos": "noun",
+  "def": "the warmest season of the year",
+  "sent": "We swim at the beach every summer.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "table",
+  "pos": "noun",
+  "def": "a piece of furniture with a flat top and legs",
+  "sent": "Set the plates on the table.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "turtle",
+  "pos": "noun",
+  "def": "a reptile with a hard shell",
+  "sent": "The turtle crawled slowly to the pond.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "wagon",
+  "pos": "noun",
+  "def": "a cart with four wheels for carrying things",
+  "sent": "We pulled the wagon full of toys.",
+  "origin": "Dutch",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "zebra",
+  "pos": "noun",
+  "def": "an African animal like a horse with black and white stripes",
+  "sent": "The zebra has black and white stripes.",
+  "origin": "Portuguese",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "listen",
+  "pos": "verb",
+  "def": "to pay attention to sounds",
+  "sent": "Listen carefully to the story.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "answer",
+  "pos": "noun",
+  "def": "a reply to a question",
+  "sent": "Raise your hand if you know the answer.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "cousin",
+  "pos": "noun",
+  "def": "a child of your aunt or uncle",
+  "sent": "My cousin is visiting from Texas.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 1,
+  "w": "dragon",
+  "pos": "noun",
+  "def": "a giant flying lizard in stories that breathes fire",
+  "sent": "The dragon in the book breathed fire.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "accident",
+  "pos": "noun",
+  "def": "something that happens by chance, often causing harm",
+  "sent": "He spilled the milk by accident.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "address",
+  "pos": "noun",
+  "def": "the number and street where someone lives",
+  "sent": "Write your address on the envelope.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "beautiful",
+  "pos": "adjective",
+  "def": "very pleasing to see or hear",
+  "sent": "The sunset was beautiful.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "believe",
+  "pos": "verb",
+  "def": "to think something is true",
+  "sent": "I believe you can win.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "business",
+  "pos": "noun",
+  "def": "a company or the work of buying and selling",
+  "sent": "Her bakery business is growing.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "ceiling",
+  "pos": "noun",
+  "def": "the inside top surface of a room",
+  "sent": "A spider crawled across the ceiling.",
+  "origin": "Middle English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "character",
+  "pos": "noun",
+  "def": "a person or animal in a story",
+  "sent": "My favorite character is the brave mouse.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "chocolate",
+  "pos": "noun",
+  "def": "a sweet food made from roasted cacao seeds",
+  "sent": "We drank hot chocolate after sledding.",
+  "origin": "Nahuatl",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "committee",
+  "pos": "noun",
+  "def": "a group of people chosen to plan or decide something",
+  "sent": "The committee planned the school dance.",
+  "origin": "Anglo-French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "dinosaur",
+  "pos": "noun",
+  "def": "a reptile that lived millions of years ago",
+  "sent": "The dinosaur skeleton filled the museum hall.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "disappear",
+  "pos": "verb",
+  "def": "to go out of sight",
+  "sent": "The rabbit seemed to disappear into the hat.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "embarrass",
+  "pos": "verb",
+  "def": "to make someone feel awkward or ashamed",
+  "sent": "Please don't embarrass me in front of my friends.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "environment",
+  "pos": "noun",
+  "def": "the natural world of land, water, air, plants, and animals",
+  "sent": "We must protect the environment.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "exercise",
+  "pos": "noun",
+  "def": "physical activity that keeps the body healthy",
+  "sent": "Running is great exercise.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "foreign",
+  "pos": "adjective",
+  "def": "from another country",
+  "sent": "She can speak a foreign language.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "government",
+  "pos": "noun",
+  "def": "the group of people who run a country or state",
+  "sent": "The government builds roads and schools.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "height",
+  "pos": "noun",
+  "def": "how tall something is",
+  "sent": "Measure the height of the plant.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "imagine",
+  "pos": "verb",
+  "def": "to form a picture in your mind",
+  "sent": "Imagine you can fly.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "jewelry",
+  "pos": "noun",
+  "def": "rings, necklaces, and other decorations worn on the body",
+  "sent": "Her jewelry sparkled in the light.",
+  "origin": "Anglo-French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "laboratory",
+  "pos": "noun",
+  "def": "a room where scientists do experiments",
+  "sent": "The scientist works in a laboratory.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "medicine",
+  "pos": "noun",
+  "def": "something taken to treat an illness",
+  "sent": "Take your medicine after dinner.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "mosquito",
+  "pos": "noun",
+  "def": "a small flying insect that bites",
+  "sent": "A mosquito bit my arm.",
+  "origin": "Spanish",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "neighbor",
+  "pos": "noun",
+  "def": "a person who lives next to or near you",
+  "sent": "Our neighbor waters our plants.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "opposite",
+  "pos": "noun",
+  "def": "something completely different from another thing",
+  "sent": "Hot is the opposite of cold.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "parallel",
+  "pos": "adjective",
+  "def": "side by side and always the same distance apart",
+  "sent": "Railroad tracks are parallel lines.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "piece",
+  "pos": "noun",
+  "def": "a part of something",
+  "sent": "May I have a piece of cake?",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "pyramid",
+  "pos": "noun",
+  "def": "a structure with a square base and four triangle sides",
+  "sent": "The ancient pyramid was made of stone blocks.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "question",
+  "pos": "noun",
+  "def": "something you ask to get information",
+  "sent": "She asked a smart question.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "recommend",
+  "pos": "verb",
+  "def": "to suggest something as good",
+  "sent": "I recommend this book to everyone.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "rhinoceros",
+  "pos": "noun",
+  "def": "a large, thick-skinned animal with one or two horns on its nose",
+  "sent": "The rhinoceros has a horn on its nose.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "scissors",
+  "pos": "noun",
+  "def": "a tool with two blades for cutting",
+  "sent": "Cut along the line with scissors.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "thorough",
+  "pos": "adjective",
+  "def": "careful and complete",
+  "sent": "Do a thorough job cleaning your room.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "weird",
+  "pos": "adjective",
+  "def": "strange or unusual",
+  "sent": "The cat made a weird noise.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 2,
+  "w": "yacht",
+  "pos": "noun",
+  "def": "a large boat used for pleasure or racing",
+  "sent": "A white yacht sailed into the harbor.",
+  "origin": "Dutch",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "accommodate",
+  "pos": "verb",
+  "def": "to have room for or provide a place to stay",
+  "sent": "The hotel can accommodate fifty guests.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "aisle",
+  "pos": "noun",
+  "def": "a walkway between rows of seats or shelves",
+  "sent": "Walk down the aisle to your seat.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "ballet",
+  "pos": "noun",
+  "def": "a graceful style of dance that tells a story",
+  "sent": "She takes ballet lessons on Saturdays.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "cemetery",
+  "pos": "noun",
+  "def": "a place where people are buried",
+  "sent": "Old stones stood in the quiet cemetery.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "colonel",
+  "pos": "noun",
+  "def": "a high officer rank in the army",
+  "sent": "The colonel saluted the flag.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "debris",
+  "pos": "noun",
+  "def": "scattered pieces of something broken",
+  "sent": "Debris covered the street after the storm.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "entrepreneur",
+  "pos": "noun",
+  "def": "a person who starts a business",
+  "sent": "The young entrepreneur started a lemonade business.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "fascinate",
+  "pos": "verb",
+  "def": "to hold someone's attention very strongly",
+  "sent": "Stars fascinate my little brother.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "gauge",
+  "pos": "noun",
+  "def": "an instrument that measures something",
+  "sent": "Check the fuel gauge before the trip.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "handkerchief",
+  "pos": "noun",
+  "def": "a small square of cloth used to wipe the nose or face",
+  "sent": "He wiped his nose with a handkerchief.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "jeopardy",
+  "pos": "noun",
+  "def": "danger of loss or harm",
+  "sent": "The flood put the town in jeopardy.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "khaki",
+  "pos": "adjective",
+  "def": "of a dull yellowish-brown color",
+  "sent": "He wore khaki pants to school.",
+  "origin": "Urdu",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "liquefy",
+  "pos": "verb",
+  "def": "to turn into a liquid",
+  "sent": "Heat will liquefy the butter.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "millennium",
+  "pos": "noun",
+  "def": "a period of one thousand years",
+  "sent": "The town celebrated its first millennium.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "nauseous",
+  "pos": "adjective",
+  "def": "feeling sick to your stomach",
+  "sent": "The bumpy ride made me nauseous.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "occurrence",
+  "pos": "noun",
+  "def": "something that happens",
+  "sent": "Snow is a rare occurrence in Florida.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "parliament",
+  "pos": "noun",
+  "def": "a group of elected people who make a country's laws",
+  "sent": "The parliament voted on the new law.",
+  "origin": "Old French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "questionnaire",
+  "pos": "noun",
+  "def": "a set of written questions to gather information",
+  "sent": "Fill out the questionnaire about your hobbies.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "reservoir",
+  "pos": "noun",
+  "def": "a lake used to store water",
+  "sent": "The town gets water from a reservoir.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "souvenir",
+  "pos": "noun",
+  "def": "something kept to remember a place or event",
+  "sent": "I bought a souvenir at the museum.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "temperamental",
+  "pos": "adjective",
+  "def": "having moods that change quickly",
+  "sent": "The temperamental cat hissed for no reason.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "unanimous",
+  "pos": "adjective",
+  "def": "agreed to by everyone",
+  "sent": "The vote was unanimous.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "vacillate",
+  "pos": "verb",
+  "def": "to keep changing your mind",
+  "sent": "He would vacillate between pizza and tacos.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "wholly",
+  "pos": "adverb",
+  "def": "completely",
+  "sent": "I wholly agree with you.",
+  "origin": "Old English",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "xylophone",
+  "pos": "noun",
+  "def": "an instrument with wooden bars struck by small hammers",
+  "sent": "She played a tune on the xylophone.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "yogurt",
+  "pos": "noun",
+  "def": "a thick, creamy food made from milk",
+  "sent": "I had yogurt with berries for breakfast.",
+  "origin": "Turkish",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "zealous",
+  "pos": "adjective",
+  "def": "full of eager energy",
+  "sent": "The zealous fan cheered all game.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "cantaloupe",
+  "pos": "noun",
+  "def": "a melon with orange flesh and a rough rind",
+  "sent": "We cut a ripe cantaloupe for dessert.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 3,
+  "w": "chameleon",
+  "pos": "noun",
+  "def": "a lizard that can change the color of its skin",
+  "sent": "The chameleon changed color on the branch.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "cacophony",
+  "pos": "noun",
+  "def": "a harsh mix of loud sounds",
+  "sent": "A cacophony of horns filled the street.",
+  "origin": "Greek",
+  "say": "kuh-KOFF-uh-nee",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "camaraderie",
+  "pos": "noun",
+  "def": "friendship and trust among people in a group",
+  "sent": "The team's camaraderie helped them win.",
+  "origin": "French",
+  "say": "kahm-uh-RAH-duh-ree",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "chandelier",
+  "pos": "noun",
+  "def": "a decorative light hanging from the ceiling with many branches",
+  "sent": "A crystal chandelier hung over the table.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "charlatan",
+  "pos": "noun",
+  "def": "a person who falsely claims to have special skills",
+  "sent": "The charlatan sold fake medicine.",
+  "origin": "Italian",
+  "say": "SHAR-luh-tun",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "dachshund",
+  "pos": "noun",
+  "def": "a dog breed with short legs and a long body",
+  "sent": "Our dachshund loves to dig.",
+  "origin": "German",
+  "say": "DAHKS-hoont",
+  "alt": [
+   "DASH-und"
+  ]
+ },
+ {
+  "level": 4,
+  "w": "ennui",
+  "pos": "noun",
+  "def": "a feeling of boredom and restlessness",
+  "sent": "Rainy afternoons filled her with ennui.",
+  "origin": "French",
+  "say": "on-WEE",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "gazpacho",
+  "pos": "noun",
+  "def": "a cold soup made with tomatoes and vegetables",
+  "sent": "We had chilled gazpacho on a hot day.",
+  "origin": "Spanish",
+  "say": "gahz-PAH-choh",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "idiosyncrasy",
+  "pos": "noun",
+  "def": "an unusual habit or feature special to one person",
+  "sent": "Humming while reading is his idiosyncrasy.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "jodhpurs",
+  "pos": "noun",
+  "def": "pants worn for horseback riding, tight below the knee",
+  "sent": "She wore jodhpurs to her riding lesson.",
+  "origin": "Hindi",
+  "say": "JOD-purz",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "kindergarten",
+  "pos": "noun",
+  "def": "the school year before first grade",
+  "sent": "My sister starts kindergarten next year.",
+  "origin": "German",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "lasagna",
+  "pos": "noun",
+  "def": "a baked dish of wide flat pasta layered with sauce and cheese",
+  "sent": "Mom baked a lasagna for dinner.",
+  "origin": "Italian",
+  "say": "luh-ZAHN-yuh",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "mayonnaise",
+  "pos": "noun",
+  "def": "a thick, creamy dressing made with egg yolks and oil",
+  "sent": "Spread mayonnaise on the bread.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "nuance",
+  "pos": "noun",
+  "def": "a slight difference in meaning or color",
+  "sent": "Good readers notice every nuance.",
+  "origin": "French",
+  "say": "NOO-ahns",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "paradigm",
+  "pos": "noun",
+  "def": "a typical example or model of something",
+  "sent": "The new phone changed the paradigm.",
+  "origin": "Greek",
+  "say": "PAIR-uh-dime",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "potpourri",
+  "pos": "noun",
+  "def": "a mix of dried petals and spices kept for its smell",
+  "sent": "A bowl of potpourri sat by the door.",
+  "origin": "French",
+  "say": "poh-puh-REE",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "quesadilla",
+  "pos": "noun",
+  "def": "a tortilla filled with cheese and folded, then heated",
+  "sent": "I ordered a cheese quesadilla.",
+  "origin": "Spanish",
+  "say": "kay-suh-DEE-yuh",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "reconnaissance",
+  "pos": "noun",
+  "def": "a mission to gather information about an area",
+  "sent": "The scouts went on a reconnaissance of the valley.",
+  "origin": "French",
+  "say": "rih-KON-uh-sunce",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "sabotage",
+  "pos": "noun",
+  "def": "deliberate damage done to stop something from working",
+  "sent": "The broken lock was clearly sabotage.",
+  "origin": "French",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "sauerkraut",
+  "pos": "noun",
+  "def": "finely cut cabbage that has been fermented",
+  "sent": "Grandpa likes sauerkraut on his hot dog.",
+  "origin": "German",
+  "say": "SOUR-krout",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "tsunami",
+  "pos": "noun",
+  "def": "a huge ocean wave caused by an earthquake",
+  "sent": "The tsunami warning sent people to higher ground.",
+  "origin": "Japanese",
+  "say": "soo-NAH-mee",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "ukulele",
+  "pos": "noun",
+  "def": "a small guitar with four strings",
+  "sent": "He strummed a song on his ukulele.",
+  "origin": "Hawaiian",
+  "say": "yoo-kuh-LAY-lee",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "vaudeville",
+  "pos": "noun",
+  "def": "old-time stage entertainment with many short acts",
+  "sent": "Her great-grandfather danced in vaudeville.",
+  "origin": "French",
+  "say": "VAWD-vil",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "epitome",
+  "pos": "noun",
+  "def": "a perfect example of something",
+  "sent": "She is the epitome of kindness.",
+  "origin": "Greek",
+  "say": "ih-PIT-uh-mee",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "zucchini",
+  "pos": "noun",
+  "def": "a long green summer squash",
+  "sent": "We grilled zucchini from the garden.",
+  "origin": "Italian",
+  "say": "zoo-KEE-nee",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "hierarchy",
+  "pos": "noun",
+  "def": "a system where people or things are ranked one above another",
+  "sent": "The army has a strict hierarchy.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "cappuccino",
+  "pos": "noun",
+  "def": "espresso coffee topped with foamed milk",
+  "sent": "Dad ordered a cappuccino.",
+  "origin": "Italian",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "miscellaneous",
+  "pos": "adjective",
+  "def": "made up of many different kinds",
+  "sent": "The drawer is full of miscellaneous junk.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "pharmaceutical",
+  "pos": "adjective",
+  "def": "relating to making and selling medicines",
+  "sent": "The pharmaceutical company makes vaccines.",
+  "origin": "Greek",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "macerate",
+  "pos": "verb",
+  "def": "to soften something by soaking it in liquid",
+  "sent": "Macerate the strawberries in sugar.",
+  "origin": "Latin",
+  "say": "",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "maelstrom",
+  "pos": "noun",
+  "def": "a powerful whirlpool, or a scene of wild confusion",
+  "sent": "The ship was pulled into a maelstrom.",
+  "origin": "Dutch",
+  "say": "MAYL-strum",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "vignette",
+  "pos": "noun",
+  "def": "a short scene or description",
+  "sent": "She wrote a vignette about her grandmother's kitchen.",
+  "origin": "French",
+  "say": "vin-YET",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "bouillabaisse",
+  "pos": "noun",
+  "def": "a French fish stew",
+  "sent": "We tried bouillabaisse at a seaside cafe.",
+  "origin": "French",
+  "say": "boo-yuh-BASE",
+  "alt": []
+ },
+ {
+  "level": 4,
+  "w": "solipsism",
+  "pos": "noun",
+  "def": "the idea that only one's own mind is sure to exist",
+  "sent": "The philosophy class debated solipsism.",
+  "origin": "Latin",
+  "say": "SOL-ip-siz-um",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "antediluvian",
+  "pos": "adjective",
+  "def": "extremely old or old-fashioned",
+  "sent": "Grandpa's antediluvian phone still has a cord.",
+  "origin": "Latin",
+  "say": "an-tih-dih-LOO-vee-un",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "serrefine",
+  "pos": "noun",
+  "def": "a small spring clamp used to close a blood vessel during surgery",
+  "sent": "The surgeon reached for a serrefine.",
+  "origin": "French",
+  "say": "sair-FEEN",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "Ursprache",
+  "pos": "noun",
+  "def": "a parent language rebuilt by comparing the languages that came from it",
+  "sent": "Scholars rebuilt the Ursprache from later languages.",
+  "origin": "German",
+  "say": "OOR-shprah-kuh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "laodicean",
+  "pos": "adjective",
+  "def": "lukewarm or uninterested",
+  "sent": "His laodicean attitude toward the project worried the team.",
+  "origin": "Greek",
+  "say": "lay-ah-duh-SEE-un",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "gesellschaft",
+  "pos": "noun",
+  "def": "a society held together by business-like rather than personal ties",
+  "sent": "The big city felt like a gesellschaft of strangers.",
+  "origin": "German",
+  "say": "guh-ZEL-shahft",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "nunatak",
+  "pos": "noun",
+  "def": "a mountain peak that sticks up through an ice sheet",
+  "sent": "The nunatak rose above the glacier.",
+  "origin": "Inuit",
+  "say": "NUN-uh-tack",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "murraya",
+  "pos": "noun",
+  "def": "a tropical tree or shrub related to citrus with sweet-smelling flowers",
+  "sent": "The murraya filled the garden with a sweet smell.",
+  "origin": "Latin",
+  "say": "muh-RAY-uh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "elucubrate",
+  "pos": "verb",
+  "def": "to work out or write after long, careful study",
+  "sent": "She would elucubrate her theory late at night.",
+  "origin": "Latin",
+  "say": "ih-LOO-kyuh-brate",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "syllepsis",
+  "pos": "noun",
+  "def": "a figure of speech where one word is used with two others in different senses",
+  "sent": "Saying she lost her keys and her temper is an example of syllepsis.",
+  "origin": "Greek",
+  "say": "sih-LEP-sis",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "ratoon",
+  "pos": "noun",
+  "def": "a new shoot that grows from a plant's root after it is cut",
+  "sent": "The farmer let the sugarcane ratoon grow.",
+  "origin": "Spanish",
+  "say": "ruh-TOON",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "abseil",
+  "pos": "verb",
+  "def": "to go down a cliff on a rope; to rappel",
+  "sent": "We will abseil down the cliff.",
+  "origin": "German",
+  "say": "AB-sile",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "catoptric",
+  "pos": "adjective",
+  "def": "relating to mirrors or reflected light",
+  "sent": "The museum had a catoptric display of mirrors.",
+  "origin": "Greek",
+  "say": "kuh-TOP-trik",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "esquamulose",
+  "pos": "adjective",
+  "def": "not covered with small scales",
+  "sent": "The leaf's esquamulose surface was smooth.",
+  "origin": "Latin",
+  "say": "ee-SKWAM-yuh-lohs",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "bougainvillea",
+  "pos": "noun",
+  "def": "a tropical vine with bright, papery flowers",
+  "sent": "Pink bougainvillea covered the wall.",
+  "origin": "French",
+  "say": "boo-gun-VIL-ee-uh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "pfeffernuss",
+  "pos": "noun",
+  "def": "a small, spicy holiday cookie",
+  "sent": "Grandma baked a pfeffernuss for each of us.",
+  "origin": "German",
+  "say": "FEF-er-noos",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "spoliator",
+  "pos": "noun",
+  "def": "a person who robs or plunders",
+  "sent": "The spoliator stole from the ancient tomb.",
+  "origin": "Latin",
+  "say": "SPOH-lee-ay-tor",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "milieu",
+  "pos": "noun",
+  "def": "the surroundings or setting someone lives in",
+  "sent": "The artist thrived in a creative milieu.",
+  "origin": "French",
+  "say": "meel-YUH",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "palama",
+  "pos": "noun",
+  "def": "the webbing between the toes of a water bird",
+  "sent": "The duck's palama helps it paddle.",
+  "origin": "Greek",
+  "say": "PAL-uh-muh",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "auslaut",
+  "pos": "noun",
+  "def": "the final sound of a word or syllable",
+  "sent": "The auslaut of the word cat is a t sound.",
+  "origin": "German",
+  "say": "OWS-lout",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "Zeitgeist",
+  "pos": "noun",
+  "def": "the general spirit or mood of a time period",
+  "sent": "Her songs captured the zeitgeist of the decade.",
+  "origin": "German",
+  "say": "TSITE-gyste",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "sphygmomanometer",
+  "pos": "noun",
+  "def": "a device used to measure blood pressure",
+  "sent": "The nurse wrapped the sphygmomanometer around my arm.",
+  "origin": "Greek",
+  "say": "sfig-moh-muh-NOM-ih-ter",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "haruspex",
+  "pos": "noun",
+  "def": "a priest in ancient Rome who claimed to read omens",
+  "sent": "The haruspex claimed to see the future.",
+  "origin": "Latin",
+  "say": "huh-RUS-pex",
+  "alt": []
+ },
+ {
+  "level": 5,
+  "w": "mesoscaphe",
+  "pos": "noun",
+  "def": "a submarine built to explore medium ocean depths",
+  "sent": "The mesoscaphe explored the lake bottom.",
+  "origin": "French",
+  "say": "MEZ-uh-skafe",
+  "alt": []
  }
 ]
