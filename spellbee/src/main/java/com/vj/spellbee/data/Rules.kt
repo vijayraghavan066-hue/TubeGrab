@@ -10,6 +10,7 @@ object Rules {
         "🔔 The bell" to "In Competition mode, one misspelling and the bell rings — you're out. Spell every word in the round to win the level.",
         "🏆 The road to the finals" to "Classroom Bee → School Bee → Regional Bee → National Prelims → National Finals. Score 80% or better to unlock the next level.",
         "📝 Practice mode" to "Keep going after a mistake and learn the right spelling. Great for studying.",
+        "📚 Where the words come from" to "Our featured words are hand-written. Thousands more come from Wiktionary, the free dictionary (en.wiktionary.org), shared under the CC BY-SA 4.0 license. Some of those words don't have a sentence or language of origin listed.",
         "📱 In this app" to "Tap the mic and say the letters, or type them. You'll see what the app heard before you tap Lock it in, because phone microphones sometimes mishear.",
     )
 

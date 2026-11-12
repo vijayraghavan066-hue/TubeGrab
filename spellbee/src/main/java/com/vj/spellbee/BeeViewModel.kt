@@ -18,6 +18,7 @@ import com.vj.spellbee.speech.LetterParser
 import com.vj.spellbee.speech.Listener
 import com.vj.spellbee.speech.Pronouncer
 import com.vj.spellbee.speech.VoiceIntent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -60,6 +61,11 @@ class BeeViewModel(app: Application) : AndroidViewModel(app) {
     private val prefs = ctx.getSharedPreferences("bee", Context.MODE_PRIVATE)
     private val bell: ToneGenerator? = try { ToneGenerator(AudioManager.STREAM_MUSIC, 90) } catch (e: Exception) { null }
     private var timerJob: Job? = null
+
+    init {
+        // Load the big word list in the background so the first round starts instantly.
+        viewModelScope.launch(Dispatchers.IO) { WordBank.all(ctx) }
+    }
 
     var ui by mutableStateOf(
         UiState(
@@ -213,11 +219,17 @@ class BeeViewModel(app: Application) : AndroidViewModel(app) {
                 voice.say("The definition is: ${w.definition}.")
                 ui = ui.copy(bubble = "📘 Definition: ${w.definition}")
             }
-            Ask.SENTENCE -> {
+            Ask.SENTENCE -> if (w.sentence.isBlank()) {
+                voice.say("I'm sorry, I don't have a sentence for this word. The definition is: ${w.definition}.")
+                ui = ui.copy(bubble = "💬 No sentence for this word. Definition: ${w.definition}")
+            } else {
                 voice.say(w.spokenSentence)
                 ui = ui.copy(bubble = "💬 ${w.blankedSentence}")
             }
-            Ask.ORIGIN -> {
+            Ask.ORIGIN -> if (w.origin.isBlank()) {
+                voice.say("I'm sorry, the language of origin isn't listed for this word.")
+                ui = ui.copy(bubble = "🌍 Language of origin isn't listed for this word.")
+            } else {
                 voice.say("The language of origin is ${w.origin}.")
                 ui = ui.copy(bubble = "🌍 Language of origin: ${w.origin}")
             }

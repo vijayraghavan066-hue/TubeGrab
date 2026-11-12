@@ -220,6 +220,8 @@ private fun LevelsScreen(ui: UiState, vm: BeeViewModel) = Page {
         Text("⏱ Timer (2 min / 90 sec per word)")
     }
 
+    val context = LocalContext.current
+    val counts = remember { WordBank.levels.associate { it.id to WordBank.forLevel(context, it.id).size } }
     WordBank.levels.forEach { level ->
         val locked = level.id > ui.unlocked
         val best = ui.best[level.id] ?: -1
@@ -234,7 +236,7 @@ private fun LevelsScreen(ui: UiState, vm: BeeViewModel) = Page {
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
                     Text("Level ${level.id}: ${level.name}", fontWeight = FontWeight.Bold, fontSize = 17.sp)
-                    Text(level.subtitle, style = MaterialTheme.typography.bodySmall)
+                    Text("${level.subtitle} · %,d words".format(counts[level.id] ?: 0), style = MaterialTheme.typography.bodySmall)
                     Text(
                         when {
                             locked -> "Score 80% on the level before to unlock"

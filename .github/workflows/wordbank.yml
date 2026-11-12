@@ -1,0 +1,51 @@
+name: Build word bank
+
+# Run from the Actions tab ("Run workflow") whenever you want to refresh Spell Bee's
+# Wiktionary words, e.g. after adding words to tools/wordbank/blocklist.txt.
+on:
+  workflow_dispatch:
+    inputs:
+      per_level:
+        description: "Words per level"
+        default: "3000"
+
+jobs:
+  wordbank:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build word list from Wiktionary
+        run: |
+          pip install wordfreq
+          python tools/wordbank/build_wordbank.py \
+            --out spellbee/src/main/assets/words_wiktionary.json \
+            --per-level ${{ inputs.per_level }} | tee wordbank-report.txt
+          ls -lh spellbee/src/main/assets/words_wiktionary.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wordbank
+          path: |
+            wordbank-report.txt
+            spellbee/src/main/assets/words_wiktionary.json
+
+      - name: Commit and rebuild the app
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
+          git add spellbee/src/main/assets/words_wiktionary.json
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Spell Bee: refresh Wiktionary word bank"
+          git push
+          # Pushes made by this job don't start other workflows, so kick off the APK build directly.
+          gh workflow run build.yml --ref "${GITHUB_REF_NAME}"

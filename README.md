@@ -72,4 +72,6 @@ Kids' spelling bee trainer that works like the real competition.
 - **Spell out loud or type.** The app shows what it heard ("C - A - T") before you **Lock it in**.
 - **Competition** (one miss and the bell rings) or **Practice** (keep going). Optional timer: 2 min / 90 sec per word.
 - **Ask the pronouncer** on the home screen: "How does the spelling bee work?", "Other ways to pronounce tomato?"
-- Add words in `spellbee/src/main/assets/words.json`.
+- **Thousands of words per level from Wiktionary.** The **Build word bank** action (Actions tab → Run workflow) downloads Wiktionary, keeps kid-safe words with clean definitions, sorts them into levels by how common they are, and rebuilds the app. Add any word that shouldn't be there to `tools/wordbank/blocklist.txt` and run it again.
+- Featured, hand-written words (with pronunciation respellings) live in `spellbee/src/main/assets/words.json`.
+- Word data from [Wiktionary](https://en.wiktionary.org), CC BY-SA 4.0.

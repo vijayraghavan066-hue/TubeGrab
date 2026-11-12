@@ -47,13 +47,50 @@ object WordBank {
     )
 
     private var cache: List<Word>? = null
+    private var byLevel: Map<Int, List<Word>> = emptyMap()
 
-    fun all(context: Context): List<Word> = cache ?: load(context).also { cache = it }
+    /** Hand-written words first, then the big Wiktionary list (skipping duplicates). Thread-safe. */
+    @Synchronized
+    fun all(context: Context): List<Word> = cache ?: run {
+        val hand = load(context)
+        val seen = hand.mapTo(HashSet()) { it.word.lowercase() }
+        val wiki = loadWiktionary(context).filter { seen.add(it.word.lowercase()) }
+        (hand + wiki).also { list ->
+            cache = list
+            byLevel = list.groupBy { it.level }
+        }
+    }
 
-    fun forLevel(context: Context, level: Int): List<Word> = all(context).filter { it.level == level }
+    fun forLevel(context: Context, level: Int): List<Word> {
+        all(context)
+        return byLevel[level].orEmpty()
+    }
 
     fun find(context: Context, text: String): Word? =
         all(context).firstOrNull { it.word.equals(text.trim(), ignoreCase = true) }
+
+    /** Compact rows: [word, level, pos, definition, sentence, origin]. Data © Wiktionary, CC BY-SA 4.0. */
+    private fun loadWiktionary(context: Context): List<Word> {
+        val text = try {
+            context.assets.open("words_wiktionary.json").bufferedReader().use { it.readText() }
+        } catch (e: Exception) {
+            return emptyList()
+        }
+        val arr = JSONArray(text)
+        return (0 until arr.length()).map { i ->
+            val r = arr.getJSONArray(i)
+            Word(
+                word = r.getString(0),
+                level = r.getInt(1),
+                partOfSpeech = r.getString(2),
+                definition = r.getString(3),
+                sentence = r.getString(4),
+                origin = r.getString(5),
+                sayAs = null,
+                alternates = emptyList(),
+            )
+        }
+    }
 
     private fun load(context: Context): List<Word> {
         val text = context.assets.open("words.json").bufferedReader().use { it.readText() }

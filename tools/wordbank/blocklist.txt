@@ -1,0 +1,2 @@
+# One word per line. These are never added to Spell Bee's word bank.
+# Add anything that slips through and isn't right for kids, then re-run the "Build word bank" action.
