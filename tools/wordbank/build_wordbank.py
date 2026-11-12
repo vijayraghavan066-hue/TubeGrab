@@ -94,8 +94,22 @@ def clean(text):
 
 
 def gives_away(word, text):
+    """True if the definition contains the word or an obvious part of it ("kicking" -> "kick")."""
     t = text.lower()
-    return word in t or (len(word) >= 6 and word[:-2] in t)
+    stems = {word}
+    if len(word) >= 6:
+        stems.add(word[:-2])
+    if len(word) >= 7:
+        stems |= {word[:6], word[:-3]}
+    for suf in ("ing", "ed", "es", "s", "tion", "ment", "ness", "ly", "er", "ity", "ous"):
+        if word.endswith(suf) and len(word) - len(suf) >= 4:
+            stems.add(word[: -len(suf)])
+    return any(st in t for st in stems)
+
+
+# Definitions that only make sense next to the dictionary entry before them.
+VAGUE_GLOSS = re.compile(r"^(A similar|Similar|Synonym of|See |Same as|That which is|The same|Alternative|Abbreviation|"
+                         r"Initialism|A variant|Variant)|\bthe verb\b", re.I)
 
 
 def categories(sense):
@@ -142,7 +156,7 @@ def pick(entry, word):
         if tags & SKIP_TAGS or s.get("form_of") or s.get("alt_of") or not glosses:
             continue
         gloss = clean(glosses[-1])
-        if not (8 <= len(gloss) <= 180) or gives_away(word, gloss) or gloss.startswith("Used "):
+        if not (8 <= len(gloss) <= 180) or gives_away(word, gloss) or gloss.startswith("Used ") or VAGUE_GLOSS.search(gloss):
             continue
         if ADULT_TOPIC.search(gloss):
             return None
