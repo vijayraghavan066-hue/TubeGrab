@@ -74,7 +74,9 @@ def origin_of(entry):
         name = exp.replace(term, "").strip(" ,;:") if term else exp
         if not name or len(name.split()) > 4 or "Proto" in name:
             continue
-        name = norm_lang(name)
+        name = norm_lang(re.sub(r"\s*\(.*?\)", "", name).strip())
+        if not name:
+            continue
         if not langs or langs[-1] != name:
             langs.append(name)
         if len(langs) >= 3:
@@ -103,10 +105,30 @@ def categories(sense):
     return out
 
 
+# Words about these topics are skipped entirely (kids' app).
+ADULT_TOPIC = re.compile(r"\b(alcohol\w*|beer|wine|liquor|whiske?y|vodka|brew\w*|cigar\w*|tobacco|dating|romantic\w*|"
+                         r"lovers?|kiss\w*|flirt\w*|gambl\w*|casino|hangover)\b", re.I)
+# Example sentences mentioning these are not used (the word is kept, with its definition).
+DARK_SENTENCE = re.compile(r"\b(kill\w*|die|died|dies|dying|death|dead|blood\w*|guns?|shot|shoot\w*|bomb\w*|war|wars|"
+                           r"weapon\w*|crime\w*|criminal\w*|prison\w*|jail\w*|violen\w*|attack\w*|murder\w*|stupid|"
+                           r"idiot\w*|fat|ugly|hate\w*|drunk\w*|misery|corpse|grave|funeral|terror\w*|abuse\w*|beat|beaten)\b", re.I)
+
+
+def good_sentence(word, ex):
+    text = clean(ex.get("text"))
+    if ex.get("ref") or ex.get("type") == "quotation":
+        return ""
+    if not (15 <= len(text) <= 150) or not re.match(r"[A-Z]", text) or len(text.split()) < 4:
+        return ""
+    if not re.search(r"\b" + re.escape(word), text, re.I) or DARK_SENTENCE.search(text) or ADULT_TOPIC.search(text):
+        return ""
+    return text if text[-1] in ".!?" else text + "."
+
+
 def pick(entry, word):
     """Return (definition, sentence) for the best kid-safe sense, None if the word must be dropped,
-    or ("", "") when no usable sense exists."""
-    definition, sentence = "", ""
+    or ("", "") when no usable sense exists. Definition and sentence come from the same sense."""
+    cands = []
     for s in entry.get("senses") or []:
         tags = set(s.get("tags") or [])
         if tags & BAN_TAGS or any(BAN_CATEGORY.search(c) for c in categories(s)):
@@ -120,19 +142,19 @@ def pick(entry, word):
         if tags & SKIP_TAGS or s.get("form_of") or s.get("alt_of") or not glosses:
             continue
         gloss = clean(glosses[-1])
-        if not definition and 8 <= len(gloss) <= 180 and not gives_away(word, gloss):
-            definition = gloss.rstrip(".")
-        if definition and not sentence:
-            for ex in s.get("examples") or []:
-                text = clean(ex.get("text"))
-                if ex.get("ref") or ex.get("type") == "quotation":
-                    continue
-                if 15 <= len(text) <= 150 and re.search(r"\b" + re.escape(word), text, re.I):
-                    sentence = text if text[-1] in ".!?" else text + "."
-                    break
-        if definition and sentence:
-            break
-    return definition, sentence
+        if not (8 <= len(gloss) <= 180) or gives_away(word, gloss) or gloss.startswith("Used "):
+            continue
+        if ADULT_TOPIC.search(gloss):
+            return None
+        sentence = next((t for t in (good_sentence(word, ex) for ex in s.get("examples") or []) if t), "")
+        cands.append((gloss.rstrip("."), sentence))
+    if not cands:
+        return "", ""
+    # Prefer one of the first few meanings that has an example sentence; otherwise the main meaning.
+    for gloss, sentence in cands[:3]:
+        if sentence:
+            return gloss, sentence
+    return cands[0][0], ""
 
 
 def level_for(word, zipf):
@@ -189,7 +211,7 @@ def main():
     except FileNotFoundError:
         pass
 
-    best, dropped, seen, headwords = {}, set(), 0, set()
+    best, dropped, seen, headwords, names = {}, set(), 0, set(), set()
     for line in open_stream(args.input):
         seen += 1
         if seen % 200000 == 0:
@@ -199,6 +221,8 @@ def main():
         except ValueError:
             continue
         word = e.get("word") or ""
+        if e.get("pos") == "name" and re.fullmatch(r"[A-Z][a-z]{2,19}", word):
+            names.add(word.lower())
         if e.get("lang_code", "en") != "en" or not re.fullmatch(r"[a-z]{3,20}", word) or word in blocked:
             continue
         if word in dropped:
@@ -254,6 +278,8 @@ def main():
 
     levels = {i: [] for i in range(1, 6)}
     for word, (score, pos, definition, sentence, origin) in best.items():
+        if word in names and not sentence:
+            continue  # mostly a first name or surname ("steve", "barry")
         z = zipf_frequency(word, "en")
         lv = level_for(word, z)
         if lv == 5 and (not origin or origin in ("Old English", "Middle English")):
