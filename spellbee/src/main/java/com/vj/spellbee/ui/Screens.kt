@@ -33,6 +33,7 @@ import com.vj.spellbee.Mode
 import com.vj.spellbee.Outcome
 import com.vj.spellbee.Screen
 import com.vj.spellbee.UiState
+import com.vj.spellbee.Updater
 import com.vj.spellbee.data.Rules
 import com.vj.spellbee.data.WordBank
 import com.vj.spellbee.speech.Ask
@@ -144,6 +145,7 @@ private fun spaced(letters: String) = letters.toList().joinToString(" - ")
 
 @Composable
 private fun HomeScreen(ui: UiState, vm: BeeViewModel, mic: (Boolean) -> Unit) = Page {
+    UpdateBar(vm)
     Text("🐝 Spell Bee Champ", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
     Text("Practice just like the real spelling bee.", style = MaterialTheme.typography.bodyMedium)
     Bubble(if (ui.listening) "🎙 Listening… ${ui.partial}" else ui.bubble)
@@ -177,6 +179,40 @@ private fun HomeScreen(ui: UiState, vm: BeeViewModel, mic: (Boolean) -> Unit) = 
         AssistChip(onClick = { vm.pronounceWord(ui.homeInput, alternates = false) }, label = { Text("🔊 Say it") })
         AssistChip(onClick = { vm.pronounceWord(ui.homeInput, alternates = true) }, label = { Text("🔀 Other pronunciations") })
         AssistChip(onClick = { vm.pronounceWord(ui.homeInput, alternates = false, slow = true) }, label = { Text("🐢 Slowly") })
+    }
+    HorizontalDivider()
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text("Version ${vm.versionName}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
+        TextButton(onClick = { vm.checkForUpdate() }) { Text("Check for updates") }
+    }
+}
+
+@Composable
+private fun UpdateBar(vm: BeeViewModel) {
+    val s by Updater.state.collectAsState()
+    if (s is Updater.State.Idle) return
+    Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(14.dp), modifier = Modifier.fillMaxWidth()) {
+        Row(Modifier.padding(horizontal = 14.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                when (val st = s) {
+                    is Updater.State.Checking -> "Checking for updates…"
+                    is Updater.State.UpToDate -> "You're on the latest version"
+                    is Updater.State.Available -> "⬆️ Update available · build ${st.release.build}"
+                    is Updater.State.Downloading -> "Downloading update… ${st.percent}%"
+                    is Updater.State.ReadyToInstall -> "Update downloaded · tap Install"
+                    is Updater.State.Error -> st.message
+                    is Updater.State.Idle -> ""
+                },
+                modifier = Modifier.weight(1f),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            when (val st = s) {
+                is Updater.State.Available -> Button(onClick = { vm.downloadUpdate(st.release) }) { Text("Update") }
+                is Updater.State.ReadyToInstall -> Button(onClick = { vm.installUpdate(st.file) }) { Text("Install") }
+                is Updater.State.Downloading, is Updater.State.Checking -> Unit
+                else -> TextButton(onClick = { vm.dismissUpdate() }) { Text("OK") }
+            }
+        }
     }
 }
 

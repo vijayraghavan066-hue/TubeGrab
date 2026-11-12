@@ -65,6 +65,8 @@ class BeeViewModel(app: Application) : AndroidViewModel(app) {
     init {
         // Load the big word list in the background so the first round starts instantly.
         viewModelScope.launch(Dispatchers.IO) { WordBank.all(ctx) }
+        // Quietly check GitHub for a newer build; the home screen shows a bar if there is one.
+        viewModelScope.launch { Updater.check(ctx, silent = true) }
     }
 
     var ui by mutableStateOf(
@@ -152,6 +154,13 @@ class BeeViewModel(app: Application) : AndroidViewModel(app) {
             )
         }
     }
+
+    // ---------- app updates ----------
+    val versionName: String get() = Updater.currentVersionName(ctx)
+    fun checkForUpdate() { viewModelScope.launch { Updater.check(ctx, silent = false) } }
+    fun downloadUpdate(release: Updater.Release) { viewModelScope.launch { Updater.download(ctx, release) } }
+    fun installUpdate(file: java.io.File) { Updater.install(ctx, file) }
+    fun dismissUpdate() { Updater.dismiss() }
 
     // ---------- listening ----------
     fun listen(forRound: Boolean) {
