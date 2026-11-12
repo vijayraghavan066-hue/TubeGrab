@@ -3,8 +3,6 @@ name: Build word bank
 # Run from the Actions tab ("Run workflow") whenever you want to refresh Spell Bee's
 # Wiktionary words, e.g. after adding words to tools/wordbank/blocklist.txt.
 on:
-  push:
-    branches: [wiktionary-words]
   workflow_dispatch:
     inputs:
       per_level:
