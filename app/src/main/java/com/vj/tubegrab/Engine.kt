@@ -382,6 +382,26 @@ object Engine {
     }
 
     /** Turn yt-dlp's noisy stderr into one readable line. */
+    /**
+     * Direct audio stream URL for an Echo to play (no download). Prefers AAC/M4A or MP3, the
+     * formats Alexa can play. YouTube links are tied to the public IP that asked for them, so the
+     * phone and the Echo must share an internet connection (same home Wi-Fi). IPv4 is forced
+     * because Echo devices fetch over IPv4.
+     */
+    suspend fun streamUrl(context: Context, item: VideoItem): String = withContext(Dispatchers.IO) {
+        awaitIdle(context)
+        val req = YoutubeDLRequest(item.url).apply {
+            addOption("-f", "140/bestaudio[ext=m4a]/bestaudio[acodec^=mp4a]/bestaudio[ext=mp3]/best[ext=mp4]")
+            addOption("--get-url")
+            addOption("--force-ipv4")
+            addOption("--no-playlist")
+            addOption("--no-warnings")
+        }
+        val out = YoutubeDL.getInstance().execute(req).out
+        out.lines().map { it.trim() }.firstOrNull { it.startsWith("https://") }
+            ?: error("No Echo-compatible audio stream found")
+    }
+
     fun cleanError(e: Throwable): String {
         val msg = e.message ?: e.javaClass.simpleName
         val lines = msg.lines().map { it.trim() }.filter { it.isNotEmpty() }

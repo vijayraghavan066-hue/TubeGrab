@@ -84,6 +84,7 @@ import com.vj.tubegrab.DlFormat
 import com.vj.tubegrab.DlState
 import com.vj.tubegrab.DlStatus
 import com.vj.tubegrab.DownloadCenter
+import com.vj.tubegrab.EchoCast
 import com.vj.tubegrab.EngineStatus
 import com.vj.tubegrab.MainViewModel
 import com.vj.tubegrab.SOURCE_ARCHIVE
@@ -388,7 +389,66 @@ private fun ResultRow(
             }
             Spacer(Modifier.height(6.dp))
             DownloadControls(state, onDownload)
+            EchoControls(item)
         }
+    }
+}
+
+/** "Echo" button: stream this video's audio on an Echo Dot through the Tube Grab Alexa skill. */
+@Composable
+private fun EchoControls(item: VideoItem) {
+    val context = LocalContext.current
+    var open by remember { mutableStateOf(false) }
+    val status = EchoCast.status[item.id]
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Box {
+            TextButton(
+                onClick = { open = true },
+                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                modifier = Modifier.height(32.dp),
+            ) { Text("▶ Echo", style = MaterialTheme.typography.labelLarge) }
+            DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+                DropdownMenuItem(
+                    text = { Text("Play on Echo") },
+                    onClick = { open = false; EchoCast.send(context, item, playNow = true) },
+                )
+                DropdownMenuItem(
+                    text = { Text("Add to Echo queue") },
+                    onClick = { open = false; EchoCast.send(context, item, playNow = false) },
+                )
+            }
+        }
+        if (status != null) {
+            Text(
+                status,
+                style = MaterialTheme.typography.bodySmall,
+                color = if (status.startsWith("Echo:")) MaterialTheme.colorScheme.error
+                else MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+/** Downloads tab: the Echo code to paste into the Alexa skill once. */
+@Composable
+private fun EchoSetupRow() {
+    val context = LocalContext.current
+    val code = remember { EchoCast.code(context) }
+    Row(
+        Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text("Echo code (paste into the Alexa skill)", style = MaterialTheme.typography.bodyMedium)
+            Text(code, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        TextButton(onClick = {
+            val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            cm.setPrimaryClip(android.content.ClipData.newPlainText("Echo code", code))
+            Toast.makeText(context, "Echo code copied", Toast.LENGTH_SHORT).show()
+        }) { Text("Copy") }
     }
 }
 
@@ -602,6 +662,9 @@ private fun DownloadsTab(engine: EngineStatus, onUpdateEngine: () -> Unit, onChe
             }
             Switch(checked = wifiOnly, onCheckedChange = { AppSettings.setWifiOnly(it) })
         }
+
+        HorizontalDivider()
+        EchoSetupRow()
 
         // Engine info + manual update (use this if YouTube downloads start failing)
         HorizontalDivider()

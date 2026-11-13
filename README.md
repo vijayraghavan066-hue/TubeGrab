@@ -12,6 +12,7 @@ Built with Kotlin + Jetpack Compose on top of [yt-dlp](https://github.com/yt-dlp
   - **MP3 – split into songs:** cuts album or jukebox videos at their chapters into one MP3 per song, in `Music/TubeGrab/<video name>/`. You can play or delete each song from the Downloads tab.
   - M4A audio (fast, no re-encode)
   - MP4 video at 360p / 720p / 1080p
+- **Play on Echo Dot:** tap **▶ Echo** on any result to stream its audio on an Amazon Echo via the Tube Grab Alexa skill. You set the skill up once; see [`alexa-skill/README.md`](alexa-skill/README.md).
 - **Progress:** live progress and cancel, with up to 2 downloads at once
 - **Saved to:** `Music/TubeGrab` (audio) and `Movies/TubeGrab` (video), so files show up in your music player and gallery
 - **App updates like the Play Store:** on launch the app checks this repo's latest release and shows an **Update available** bar, then **Update → Install**. You can also tap **Check app update** in the Downloads tab.
@@ -22,6 +23,7 @@ Built with Kotlin + Jetpack Compose on top of [yt-dlp](https://github.com/yt-dlp
 - **1.0:** YouTube search plus MP3/MP4 downloads
 - **1.1:** Other sites tab (Internet Archive + Dailymotion), fixed signing key so updates install over the old version
 - **1.2:** In-app updater, plus MP3 split into songs with per-song play and delete
+- **1.3:** ▶ Echo: play on Echo Dot or add to its queue, through the Tube Grab Alexa skill
 
 ## How updates are built
 Every push to `main` runs the GitHub Action, which builds the APKs and publishes a release tagged `build-N`. N is the GitHub run number, and it's also the app's versionCode. The in-app updater compares the two numbers and downloads the APK that matches the phone's CPU.
