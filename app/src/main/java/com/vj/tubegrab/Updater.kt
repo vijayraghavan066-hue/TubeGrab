@@ -101,31 +101,57 @@ object Updater {
         val dir = File(context.cacheDir, "update").apply { deleteRecursively(); mkdirs() }
         val out = File(dir, "TubeGrab-build-${release.build}.apk")
         try {
-            var url = URL(release.apkUrl)
-            var conn: HttpURLConnection
-            // Follow GitHub's redirect to its file host manually (works across hosts reliably)
-            var hops = 0
+            // Big APKs over flaky Wi-Fi: if the connection drops, retry and resume where it stopped
+            var attempt = 0
             while (true) {
-                conn = url.openConnection() as HttpURLConnection
-                conn.instanceFollowRedirects = false
-                conn.connectTimeout = 10000
-                conn.readTimeout = 30000
-                conn.setRequestProperty("User-Agent", "TubeGrab-updater")
-                val code = conn.responseCode
-                if (code in 300..399 && hops++ < 5) {
-                    val next = conn.getHeaderField("Location") ?: error("Bad redirect")
-                    conn.disconnect()
-                    url = URL(url, next)
-                    continue
+                try {
+                    downloadInto(release, out)
+                    break
+                } catch (e: java.io.IOException) {
+                    if (++attempt >= 6) throw e
+                    kotlinx.coroutines.delay(2000L * attempt)
                 }
-                if (code !in 200..299) error("Download failed: HTTP $code")
-                break
             }
-            val total = conn.contentLengthLong.takeIf { it > 0 } ?: release.sizeBytes
+            _state.value = State.ReadyToInstall(release, out)
+        } catch (e: Exception) {
+            out.delete()
+            _state.value = State.Error("Update download failed: ${e.message}")
+        }
+    }
+
+    /** Downloads (or resumes) the APK into [out], following GitHub's redirect each time. */
+    private fun downloadInto(release: Release, out: File) {
+        val have = out.length()
+        var url = URL(release.apkUrl)
+        var conn: HttpURLConnection
+        var hops = 0
+        while (true) {
+            conn = url.openConnection() as HttpURLConnection
+            conn.instanceFollowRedirects = false
+            conn.connectTimeout = 15000
+            conn.readTimeout = 30000
+            conn.setRequestProperty("User-Agent", "TubeGrab-updater")
+            if (have > 0) conn.setRequestProperty("Range", "bytes=$have-")
+            val code = conn.responseCode
+            if (code in 300..399 && hops++ < 5) {
+                val next = conn.getHeaderField("Location") ?: error("Bad redirect")
+                conn.disconnect()
+                url = URL(url, next)
+                continue
+            }
+            if (code == 416 && have > 0 && have >= release.sizeBytes) { conn.disconnect(); return }
+            if (code !in 200..299) error("Download failed: HTTP $code")
+            break
+        }
+        // 206 = server resumed; 200 = it sent the whole file again, so start over
+        val resumed = conn.responseCode == 206
+        val total = release.sizeBytes.takeIf { it > 0 }
+            ?: (conn.contentLengthLong.takeIf { it > 0 }?.plus(if (resumed) have else 0) ?: -1)
+        try {
             conn.inputStream.use { input ->
-                out.outputStream().use { output ->
+                java.io.FileOutputStream(out, resumed).use { output ->
                     val buf = ByteArray(64 * 1024)
-                    var done = 0L
+                    var done = if (resumed) have else 0L
                     var lastPct = -1
                     while (true) {
                         val n = input.read(buf)
@@ -140,13 +166,11 @@ object Updater {
                             }
                         }
                     }
+                    if (total > 0 && done < total) throw java.io.IOException("Connection dropped")
                 }
             }
+        } finally {
             conn.disconnect()
-            _state.value = State.ReadyToInstall(release, out)
-        } catch (e: Exception) {
-            out.delete()
-            _state.value = State.Error("Update download failed: ${e.message}")
         }
     }
 
