@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gate Remote</string>
+    <string name="a11y_desc">Lets Gate Remote open the Gatewise app and tap a gate button when a text with your secret code arrives from an allowed number. It only reads the screen while doing that.</string>
+    <string name="sc_entrance">Entrance Gate</string>
+    <string name="sc_ped">Pedestrian Gate</string>
+    <string name="sc_side">Side Pedestrian</string>
+    <string name="sc_status">Gate phone status</string>
+</resources>

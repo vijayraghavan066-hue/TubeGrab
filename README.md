@@ -66,6 +66,7 @@ This repo now holds several of Vj's apps. Each folder is its own app with its ow
 |---|---|---|
 | `app/` | TubeGrab | `app-arm64-v8a-release.apk` (or universal) |
 | `spellbee/` | 🐝 Spell Bee Champ | `SpellBeeChamp-release.apk` |
+| `gate/` | 🚪 Gate Remote | `GateRemote-release.apk` |
 
 ## 🐝 Spell Bee Champ
 Kids' spelling bee trainer that works like the real competition.
@@ -77,3 +78,26 @@ Kids' spelling bee trainer that works like the real competition.
 - **Thousands of words per level from Wiktionary.** The **Build word bank** action (Actions tab → Run workflow) downloads Wiktionary, keeps kid-safe words with clean definitions, sorts them into levels by how common they are, and rebuilds the app. Add any word that shouldn't be there to `tools/wordbank/blocklist.txt` and run it again.
 - Featured, hand-written words (with pronunciation respellings) live in `spellbee/src/main/assets/words.json`.
 - Word data from [Wiktionary](https://en.wiktionary.org), CC BY-SA 4.0.
+
+## 🚪 Gate Remote
+Opens the Gatewise gate from a phone that doesn't have Gatewise, by texting the phone that does.
+Install the **same APK on both phones** and pick a role on first launch.
+
+**Sender (your phone):** big buttons for Entrance Gate, Pedestrian Gate and Side Pedestrian. A tap texts
+`GATE ENTRANCE <code> @lat,lon` to the gate phone and shows its reply ("✅ Tapped Entrance Gate" / "❌ …").
+Long-press the app icon to drag one-tap gate shortcuts onto the home screen.
+
+**Gate phone (has Gatewise):** when a text arrives from an allowed number with the right code, it wakes the
+screen, opens Gatewise, taps the matching tile and texts the result back. Anything else is ignored.
+
+Safety checks on the gate phone:
+- Only allowed numbers, and only with the secret code (both set in the app, never stored in this repo)
+- **250 m rule:** the sender's location must be within the radius of the gate (set it once standing at the gate)
+- If the phone is locked with a PIN it won't open, and it texts back why
+
+Gate phone setup (the app shows a checklist):
+1. Allow SMS. On Android 13+, if Android says "Restricted setting": Settings → Apps → Gate Remote → ⋮ → **Allow restricted settings**.
+2. Settings → Accessibility → Installed apps → **Gate Remote** → on.
+3. Battery → don't optimize Gate Remote.
+4. **Smart Lock → Trusted places → home.** Android doesn't let any app get past a PIN, so this keeps the phone unlockable at home.
+5. Use the **Test** buttons: they find each Gatewise button without tapping it.

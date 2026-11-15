@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="entrance"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/sc_entrance">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.vj.gate"
+            android:targetClass="com.vj.gate.MainActivity">
+            <extra android:name="gate" android:value="ENTRANCE" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="ped"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/sc_ped">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.vj.gate"
+            android:targetClass="com.vj.gate.MainActivity">
+            <extra android:name="gate" android:value="PED" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="side"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/sc_side">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.vj.gate"
+            android:targetClass="com.vj.gate.MainActivity">
+            <extra android:name="gate" android:value="SIDE" />
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="status"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/sc_status">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.vj.gate"
+            android:targetClass="com.vj.gate.MainActivity">
+            <extra android:name="gate" android:value="STATUS" />
+        </intent>
+    </shortcut>
+</shortcuts>

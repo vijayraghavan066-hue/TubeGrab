@@ -30,6 +30,7 @@ jobs:
           path: |
             app/build/outputs/apk/release/*.apk
             spellbee/build/outputs/apk/release/*.apk
+            gate/build/outputs/apk/release/*.apk
 
       # Publish the APKs as a GitHub Release so they can be downloaded directly on a phone
       - name: Publish release
@@ -42,3 +43,4 @@ jobs:
           files: |
             app/build/outputs/apk/release/*.apk
             spellbee/build/outputs/apk/release/*.apk
+            gate/build/outputs/apk/release/*.apk
