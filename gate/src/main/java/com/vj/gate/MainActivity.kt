@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
@@ -72,6 +73,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         History.load(this)
+        AutoUpdate.schedule(this)
         shortcutGate.value = intent?.getStringExtra("gate")
         setContent {
             MaterialTheme(colorScheme = darkColorScheme(primary = Color(0xFF7FD1FF), secondary = Color(0xFF4CD964))) {
@@ -80,6 +82,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AutoUpdate.appVisible = true
+    }
+
+    override fun onPause() {
+        AutoUpdate.appVisible = false
+        super.onPause()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -110,6 +122,7 @@ fun GateApp(shortcutGate: MutableStateFlow<String?>) {
 
         if (mode.isNotEmpty()) {
             HorizontalDivider()
+            AutoUpdateRow()
             HistoryList()
             TextButton(onClick = { Prefs.setMode(ctx, ""); mode = "" }) {
                 Text("Change what this phone does (currently: ${if (mode == Prefs.SENDER) "sender" else "gate phone"})")
@@ -316,6 +329,30 @@ private fun ReceiverScreen() {
         }
     }
     Text("Finds the button in Gatewise without tapping it. Result shows in the log below.", fontSize = 13.sp, color = Color.Gray)
+}
+
+/** Auto-update needs "Install unknown apps" for Gate Remote (+ notifications for the tap-to-install fallback). */
+@Composable
+private fun AutoUpdateRow() {
+    val ctx = LocalContext.current
+    var refresh by remember { mutableIntStateOf(0) }
+    RefreshOnResume { refresh++ }
+    val askNotif = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { refresh++ }
+    val installOk = remember(refresh) { ctx.packageManager.canRequestPackageInstalls() }
+    val notifOk = remember(refresh) {
+        Build.VERSION.SDK_INT < 33 || Phone.has(ctx, Manifest.permission.POST_NOTIFICATIONS)
+    }
+    Text("Auto-update", fontWeight = FontWeight.Bold, color = Color.White)
+    Check("Allow Gate Remote to install its own updates", installOk) {
+        ctx.startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${ctx.packageName}")))
+    }
+    Check("Notifications (for \"update ready\" if Android wants a tap)", notifOk) {
+        if (Build.VERSION.SDK_INT >= 33) askNotif.launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
+    Text(
+        "Checks for new versions every 6 hours in the background and installs them. The first update needs one tap on Update; after that they install by themselves (Android 12+).",
+        fontSize = 13.sp, color = Color.Gray
+    )
 }
 
 @SuppressLint("BatteryLife")

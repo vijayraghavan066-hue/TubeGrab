@@ -15,7 +15,7 @@ android {
         // Same build number as the rest of the repo (CI passes -PbuildNumber)
         val buildNumber = (project.findProperty("buildNumber") as String?)?.toIntOrNull() ?: 1
         versionCode = buildNumber
-        versionName = "1.0 (build $buildNumber)"
+        versionName = "1.1 (build $buildNumber)"
     }
 
     // Reuse the repo's fixed personal key so new builds install as updates over old ones.
@@ -61,4 +61,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
 }

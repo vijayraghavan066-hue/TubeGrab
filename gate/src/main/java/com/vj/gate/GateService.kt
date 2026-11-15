@@ -51,6 +51,7 @@ class GateService : AccessibilityService() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var job: Job? = null
+    val busy get() = job?.isActive == true
 
     override fun onServiceConnected() {
         instance = this

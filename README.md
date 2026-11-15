@@ -101,3 +101,8 @@ Gate phone setup (the app shows a checklist):
 3. Battery → don't optimize Gate Remote.
 4. **Smart Lock → Trusted places → home.** Android doesn't let any app get past a PIN, so this keeps the phone unlockable at home.
 5. Use the **Test** buttons: they find each Gatewise button without tapping it.
+
+**Auto-update (1.1+):** every push to `main` builds a new release, and Gate Remote checks for it every 6 hours in
+the background (no need to open the app), downloads it and installs it. The first update needs one tap on
+**Update**; after that, Android 12+ installs updates silently. If Android still asks, a "Gate Remote update ready"
+notification appears. It never updates in the middle of opening the gate.
