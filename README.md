@@ -67,6 +67,7 @@ This repo now holds several of Vj's apps. Each folder is its own app with its ow
 | `app/` | TubeGrab | `app-arm64-v8a-release.apk` (or universal) |
 | `spellbee/` | 🐝 Spell Bee Champ | `SpellBeeChamp-release.apk` |
 | `gate/` | 🚪 Gate Remote | `GateRemote-release.apk` |
+| `tidy/` | 🧹 Phone Tidy | `PhoneTidy-release.apk` |
 
 ## 🐝 Spell Bee Champ
 Kids' spelling bee trainer that works like the real competition.
@@ -107,6 +108,23 @@ the background (no need to open the app), downloads it and installs it. The firs
 **Update**; after that, Android 12+ installs updates silently. If Android still asks, a "Gate Remote update ready"
 notification appears. It never updates in the middle of opening the gate.
 
+## 🧹 Phone Tidy
+Cleans up photos and videos with on-device AI. Nothing is uploaded. Android 11+.
+
+- **Duplicates & similar shots:** groups near-identical photos (copies, re-saves, WhatsApp versions, bursts). The AI picks
+  the one to keep (★): sharpest, best exposure, highest resolution, original over WhatsApp copy, and, using Google's
+  ML Kit face model, **everyone's eyes open** and smiling. The rest are pre-selected.
+- **Blurry photos:** edge-sharpness check with Low / Medium / High sensitivity.
+- **Dark & pocket shots:** almost-black accidental photos.
+- **Screenshots** (oldest first), **WhatsApp media** and **Large videos** (over 50 MB), biggest first. Nothing is pre-selected.
+- **Storage card:** used / total, plus how much space photos and videos take.
+- **Safe delete:** everything goes to Android's trash through the system confirm dialog, and you can restore it for 30 days.
+  Tap a tile to select it; long-press to view it full size.
+- **Fast rescans:** each photo's analysis is cached, so later scans only check new photos.
+- **Auto-update:** same as Gate Remote: checks every 6 hours in the background, the first update needs one tap, and later
+  ones install silently on Android 12+. It never updates in the middle of a scan.
+
+**Planned:** AI tags (documents, receipts, memes) with search by text in photos, and Google Drive backup.
 ## 🔐 Signing key
 All apps in this repo are signed with one private key that lives **only** in the repo's encrypted secrets
 (Settings → Secrets and variables → Actions): `SIGNING_KEY_B64` (the keystore, base64) and `SIGNING_KEY_PASSWORD`.

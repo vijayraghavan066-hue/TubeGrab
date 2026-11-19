@@ -16,3 +16,4 @@ rootProject.name = "TubeGrab"
 include(":app")       // TubeGrab
 include(":spellbee")  // Spell Bee Champ
 include(":gate")      // Gate Remote
+include(":tidy")      // Phone Tidy
