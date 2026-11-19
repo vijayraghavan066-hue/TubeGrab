@@ -19,10 +19,49 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
+      # The signing key lives only in the repo's encrypted secrets (Settings → Secrets and variables → Actions)
+      - name: Load signing key
+        env:
+          SIGNING_KEY_B64: ${{ secrets.SIGNING_KEY_B64 }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: |
+          if [ -z "$SIGNING_KEY_B64" ] || [ -z "$SIGNING_KEY_PASSWORD" ]; then
+            echo "::error::Add the SIGNING_KEY_B64 and SIGNING_KEY_PASSWORD secrets (README → Signing key)"
+            exit 1
+          fi
+          echo "$SIGNING_KEY_B64" | base64 -d > "$RUNNER_TEMP/vjapps.jks"
+          echo "VJ_KEYSTORE=$RUNNER_TEMP/vjapps.jks" >> "$GITHUB_ENV"
+
       - name: Build APKs
+        env:
+          VJ_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease -PbuildNumber=${{ github.run_number }} --stacktrace
+
+      # Key rotation: the apps used to be signed with an old key that was public in this repo.
+      # Each APK carries a proof, signed by the old key, that the new key replaces it. Phones on
+      # Android 9+ then accept the new APKs as updates and from then on refuse anything signed
+      # only with the old key. The old key is read from this repo's history (it's public anyway).
+      - name: Sign with key rotation
+        env:
+          VJ_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+        run: |
+          OLD_COMMIT=b645b327bb02d83d0ef9f3f4c8b2d2932adce1cd
+          git fetch --depth=1 origin "$OLD_COMMIT"
+          git show "$OLD_COMMIT:app/tubegrab-release.jks" > "$RUNNER_TEMP/old.jks"
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          echo "Using $BT"
+          OLD="--ks $RUNNER_TEMP/old.jks --ks-pass pass:tubegrab123 --ks-key-alias tubegrab --key-pass pass:tubegrab123"
+          NEW="--ks $VJ_KEYSTORE --ks-pass env:VJ_KEY_PASSWORD --ks-key-alias vjapps --key-pass env:VJ_KEY_PASSWORD"
+          "$BT/apksigner" rotate --out "$RUNNER_TEMP/lineage" --old-signer $OLD --new-signer $NEW
+          for apk in app/build/outputs/apk/release/*.apk spellbee/build/outputs/apk/release/*.apk gate/build/outputs/apk/release/*.apk; do
+            "$BT/apksigner" sign $OLD --next-signer $NEW \
+              --lineage "$RUNNER_TEMP/lineage" --rotation-min-sdk-version 28 "$apk"
+            echo "== $apk"
+            "$BT/apksigner" verify --verbose --print-certs "$apk" | grep -E "Verified using|Signer #|certificate SHA-256" || true
+          done
+          rm -f "$RUNNER_TEMP/old.jks" "$VJ_KEYSTORE"
 
       - uses: actions/upload-artifact@v4
         with:

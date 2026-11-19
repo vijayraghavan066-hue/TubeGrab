@@ -29,21 +29,24 @@ android {
         }
     }
 
-    // Fixed personal signing key so each new build installs as an update over the old one.
-    // (Fine for a personal sideloaded app; never reuse this key for a Play Store app.)
+    // Signing key comes from GitHub secrets and is never stored in this repo (README → "Signing key").
+    // Without VJ_KEYSTORE (e.g. a local build) the release APK is left unsigned.
+    val vjKeystore: String? = System.getenv("VJ_KEYSTORE")
     signingConfigs {
-        create("tubegrab") {
-            storeFile = file("tubegrab-release.jks")
-            storePassword = "tubegrab123"
-            keyAlias = "tubegrab"
-            keyPassword = "tubegrab123"
+        create("vjapps") {
+            if (vjKeystore != null) {
+                storeFile = file(vjKeystore)
+                storePassword = System.getenv("VJ_KEY_PASSWORD")
+                keyAlias = "vjapps"
+                keyPassword = System.getenv("VJ_KEY_PASSWORD")
+            }
         }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("tubegrab")
+            signingConfig = if (vjKeystore != null) signingConfigs.getByName("vjapps") else null
         }
     }
 

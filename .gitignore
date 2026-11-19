@@ -6,3 +6,7 @@ local.properties
 .DS_Store
 captures/
 .kotlin/
+
+# Signing keys live in GitHub secrets, never in the repo
+*.jks
+*.keystore

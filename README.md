@@ -21,7 +21,7 @@ Built with Kotlin + Jetpack Compose on top of [yt-dlp](https://github.com/yt-dlp
 
 ## Version history
 - **1.0:** YouTube search plus MP3/MP4 downloads
-- **1.1:** Other sites tab (Internet Archive + Dailymotion), fixed signing key so updates install over the old version
+- **1.1:** Other sites tab (Internet Archive + Dailymotion), fixed signing key so updates install over the old version (see Signing key)
 - **1.2:** In-app updater, plus MP3 split into songs with per-song play and delete
 - **1.3:** ▶ Echo: play on Echo Dot or add to its queue, through the Tube Grab Alexa skill
 
@@ -106,3 +106,16 @@ Gate phone setup (the app shows a checklist):
 the background (no need to open the app), downloads it and installs it. The first update needs one tap on
 **Update**; after that, Android 12+ installs updates silently. If Android still asks, a "Gate Remote update ready"
 notification appears. It never updates in the middle of opening the gate.
+
+## 🔐 Signing key
+All apps in this repo are signed with one private key that lives **only** in the repo's encrypted secrets
+(Settings → Secrets and variables → Actions): `SIGNING_KEY_B64` (the keystore, base64) and `SIGNING_KEY_PASSWORD`.
+It is never committed. Keep the backup copy safe: without it, new builds can't update the apps already on the phones.
+
+The apps were first signed with an older key that was committed here by mistake (so it's public). Builds now use
+Android **key rotation**: each APK carries a proof, signed by the old key, that the new key replaces it. Phones on
+Android 9+ install the new builds as normal updates (no reinstall, no lost data) and from then on refuse any APK
+signed only with the old key. Only install these apps from this repo's Releases.
+
+Builds fail with "Add the SIGNING_KEY_B64 and SIGNING_KEY_PASSWORD secrets" if the secrets are missing.
+Local Android Studio builds still work; release APKs are just left unsigned unless `VJ_KEYSTORE` / `VJ_KEY_PASSWORD` are set.
